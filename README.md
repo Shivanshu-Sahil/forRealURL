@@ -13,7 +13,7 @@
 
 **A modern, full-stack URL shortening service with real-time analytics, user authentication, and beautiful responsive design.**
 
-[Live Demo](https://your-app.vercel.app) • [Report Bug](https://github.com/Shivanshu-Sahil/forRealURL/issues) • [Request Feature](https://github.com/Shivanshu-Sahil/forRealURL/issues)
+[Live Demo](https://realurl.vercel.app/) • [Report Bug](https://github.com/Shivanshu-Sahil/forRealURL/issues) • [Request Feature](https://github.com/Shivanshu-Sahil/forRealURL/issues)
 
 </div>
 
@@ -26,8 +26,6 @@
 🔐 **Secure Authentication**: Private dashboards with Supabase Auth - your links stay yours
 
 📱 **Responsive Design**: Flawless experience across desktop, tablet, and mobile devices
-
-⚡ **Lightning Fast Redirects**: Millisecond redirects powered by Vercel's global edge network
 
 🎨 **QR Code Generation**: Instant scannable codes for print materials and offline campaigns
 
@@ -45,7 +43,6 @@
 - **Framework**: React 19 with Vite  
 - **Language**: JavaScript ES6+
 - **Styling**: Tailwind CSS + Radix UI
-- **Routing**: React Router DOM
 - **Charts**: Recharts for analytics
 - **Icons**: Lucide React
 - **Build Tool**: Vite
@@ -54,7 +51,6 @@
 - **Backend**: Supabase (PostgreSQL + Auth)
 - **Real-time**: Supabase subscriptions
 - **Security**: Row-level security (RLS)
-- **API**: Auto-generated RESTful endpoints
 
 **Additional Tools**
 - **Analytics**: ua-parser-js for device detection
