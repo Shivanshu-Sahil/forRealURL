@@ -65,7 +65,10 @@ const Dashboard = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
           <div>
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2">
-              Dashboard
+              {user?.user_metadata?.name 
+                ? <>{user.user_metadata.name}&apos;s Dashboard</>
+                : <>{user?.email?.split('@')[0] || 'My'} Dashboard</>
+              }
             </h1>
             <p className="text-gray-400">
               Manage and track your shortened URLs

@@ -137,7 +137,10 @@ export function CreateLink() {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Card className="p-2 bg-gray-800 border-gray-700 text-gray-400 text-sm">
-                forReal.URL/
+                forReal.URL
+              </Card>
+              <Card className="p-2 bg-gray-800 border-gray-700 text-gray-400 text-sm">
+                /
               </Card>
               <Input
                 id="customUrl"
