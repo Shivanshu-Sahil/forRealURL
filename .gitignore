@@ -1,0 +1,210 @@
+# ========================================
+# DEPENDENCIES
+# ========================================
+node_modules/
+jspm_packages/
+bower_components/
+
+# ========================================
+# ENVIRONMENT VARIABLES - CRITICAL!
+# ========================================
+.env
+.env.*
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+!.env.example
+
+# ========================================
+# BUILD OUTPUTS
+# ========================================
+dist/
+dist-ssr/
+build/
+out/
+*.local
+
+# ========================================
+# LOGS
+# ========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ========================================
+# VITE
+# ========================================
+.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# ========================================
+# TESTING & COVERAGE
+# ========================================
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ========================================
+# CACHE & TEMPORARY FILES
+# ========================================
+.cache/
+.parcel-cache/
+.npm/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# ========================================
+# RUNTIME DATA
+# ========================================
+pids/
+*.pid
+*.seed
+*.pid.lock
+.node_repl_history
+
+# ========================================
+# PACKAGE MANAGER FILES
+# ========================================
+*.tgz
+.yarn-integrity
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Uncomment the lock file you DON'T want to track:
+# yarn.lock
+# package-lock.json
+# pnpm-lock.yaml
+
+# ========================================
+# DEPLOYMENT
+# ========================================
+.vercel/
+.netlify/
+.firebase/
+.serverless/
+
+# ========================================
+# DATABASES
+# ========================================
+.supabase/
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# ========================================
+# EDITOR & IDE
+# ========================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ========================================
+# OS GENERATED FILES
+# ========================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+# ========================================
+# PROJECT SPECIFIC
+# ========================================
+# Extra documentation/notes folder
+extra/
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Debug files
+debug.log
+error.log
+
+# QR code uploads (if stored locally)
+public/uploads/
+public/qr-codes/
+
+# User uploaded files
+uploads/
+
+# ========================================
+# SECURITY & SENSITIVE DATA
+# ========================================
+# API keys and secrets
+secrets/
+.secret
+*.pem
+*.key
+*.cert
+*.crt
+certificate/
+
+# Configuration files with sensitive data
+config.local.js
+config.local.json

@@ -1,0 +1,13 @@
+# www.yourshortener.com
+User-agent: *
+Allow: /
+
+# Disallow authentication pages from search engines
+Disallow: /auth
+Disallow: /dashboard
+
+# Allow short links to be crawled
+Allow: /*
+
+# Sitemap location
+Sitemap: https://www.yourshortener.com/sitemap.xml
