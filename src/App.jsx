@@ -8,6 +8,7 @@ import Dashboard from '@/pages/dashboard';
 import Link from '@/pages/link';
 import Redirect from '@/pages/redirect';
 import RequireAuth from '@/components/require-auth';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,19 @@ const router = createBrowserRouter(
 function App() {
   return (
     <UrlProvider>
+      <Toaster 
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        toastOptions={{
+          duration: 2000,
+          style: {
+            background: '#1f2937',
+            color: '#fff',
+            border: '1px solid #374151',
+          },
+        }}
+      />
       <RouterProvider router={router} />
     </UrlProvider>
   );

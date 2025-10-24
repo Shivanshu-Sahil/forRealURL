@@ -9,6 +9,7 @@ import { getUrl, deleteUrl } from "@/db/apiUrls";
 import { getClicksForUrl } from "@/db/apiClicks";
 import DeviceStats from "@/components/deviceStats";
 import LocationStats from "@/components/locationStats";
+import {copyToClipboard} from "@/lib/copyToClipboard";
 
 const Link = () => {
   const navigate = useNavigate();
@@ -144,7 +145,7 @@ const Link = () => {
                   variant="outline"
                   size="sm"
                   className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-orange-400"
-                  onClick={() => navigator.clipboard.writeText(fullShortUrl)}
+                  onClick={() => copyToClipboard(fullShortUrl, '✓ Short URL copied!')}
                 >
                   <Copy className="h-4 w-4 mr-2" />
                   Copy

@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {Button} from "./ui/button";
 import useFetch from "@/hooks/use-fetch";
 import {deleteUrl} from "@/db/apiUrls";
+import {copyToClipboard} from "@/lib/copyToClipboard";
 
 const LinkCard = ({url = [], fetchUrls}) => {
   const downloadImage = () => {
@@ -54,7 +55,10 @@ const LinkCard = ({url = [], fetchUrls}) => {
           variant="ghost"
           className="hover:bg-gray-800 hover:text-orange-500 transition-colors"
           onClick={() =>
-            navigator.clipboard.writeText(`https://forReal.URL/${url?.short_url}`)
+            copyToClipboard(
+              `https://forReal.URL/${url?.short_url}`,
+              '✓ URL copied to clipboard!'
+            )
           }
         >
           <Copy className="w-4 h-4" />
