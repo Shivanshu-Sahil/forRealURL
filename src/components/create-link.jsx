@@ -33,6 +33,7 @@ export function CreateLink() {
     longUrl: longLink ? longLink : "",
     customUrl: "",
   });
+  const [generatedShortCode, setGeneratedShortCode] = useState("");
 
   const schema = yup.object().shape({
     title: yup.string().required("Title is required"),
@@ -57,6 +58,27 @@ export function CreateLink() {
     fn: fnCreateUrl,
   } = useFetch(createUrl, null);
 
+  const [shortUrl, setShortUrl] = useState("");
+
+  // Generate short URL preview when form values change
+  useEffect(() => {
+    if (formValues.customUrl) {
+      setShortUrl(`${import.meta.env.VITE_CUSTOM_URL || 'https://forReal.URL'}/${formValues.customUrl}`);
+    } else if (formValues.longUrl) {
+      // Generate short code once and reuse it
+      if (!generatedShortCode) {
+        const tempShortCode = Math.random().toString(36).substr(2, 6);
+        setGeneratedShortCode(tempShortCode);
+        setShortUrl(`${import.meta.env.VITE_CUSTOM_URL || 'https://forReal.URL'}/${tempShortCode}`);
+      } else {
+        setShortUrl(`${import.meta.env.VITE_CUSTOM_URL || 'https://forReal.URL'}/${generatedShortCode}`);
+      }
+    } else {
+      setShortUrl("");
+      setGeneratedShortCode("");
+    }
+  }, [formValues.customUrl, formValues.longUrl, generatedShortCode]);
+
   useEffect(() => {
     if (error === null && data) {
       navigate(`/link/${data[0].id}`);
@@ -74,9 +96,21 @@ export function CreateLink() {
     
     try {
       await schema.validate(formValues, {abortEarly: false});
+      
+      // Use the already generated short code from state
+      const shortCode = generatedShortCode || Math.random().toString(36).substr(2, 6);
+      
       const canvas = ref.current.canvasRef.current;
       const blob = await new Promise((resolve) => canvas.toBlob(resolve));
-      await fnCreateUrl({...formValues, user_id: user.id}, blob);
+      
+      await fnCreateUrl(
+        {
+          ...formValues, 
+          user_id: user.id,
+          short_url: shortCode
+        }, 
+        blob
+      );
     } catch (e) {
       const newErrors = {};
 
@@ -108,7 +142,11 @@ export function CreateLink() {
         <div className="space-y-4">
           {formValues?.longUrl && (
             <div className="flex justify-center p-4 bg-white rounded-lg">
-              <QRCode ref={ref} size={200} value={formValues?.longUrl} />
+              <QRCode 
+                ref={ref} 
+                size={200} 
+                value={shortUrl || formValues?.longUrl}
+              />
             </div>
           )}
 

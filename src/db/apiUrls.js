@@ -45,9 +45,12 @@ export async function getLongUrl(id) {
   return shortLinkData;
 }
 
-export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
-  const short_url = Math.random().toString(36).substr(2,6);
-  const fileName = `qr-${short_url}`;
+export async function createUrl({title, longUrl, customUrl, user_id, short_url}, qrcode) {
+  // Use provided short_url or generate a new one if not provided
+  const shortCode = short_url || Math.random().toString(36).substr(2,6);
+  const fileName = `qr-${shortCode}`;
+  
+  // Upload the QR code blob (which should contain the short URL)
   const {error: storageError} = await supabase.storage
     .from("qrs")
     .upload(fileName, qrcode);
@@ -63,7 +66,7 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
         user_id,
         org_url: longUrl,
         custom_url: customUrl || null,
-        short_url,
+        short_url: shortCode,
         qr,
       },
     ])
