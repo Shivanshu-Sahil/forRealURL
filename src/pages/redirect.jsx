@@ -8,30 +8,24 @@ const Redirect = () => {
   const { id } = useParams();
   const hasRecordedClick = useRef(false);
 
-  // Fetch original URL from database using the short ID
   const { loading: loadingUrl, data, fn: fetchUrl } = useFetch(getLongUrl, null);
 
-  // Set up click tracking function
-  const { loading: loadingStats, fn: recordClick } = useFetch(storeClicks, null);
-
-  // On component mount, fetch the original URL
   useEffect(() => {
     fetchUrl(id);
   }, [id]);
 
-  // When URL data is loaded, record the click and redirect (only once)
   useEffect(() => {
     if (!loadingUrl && data && !hasRecordedClick.current) {
       hasRecordedClick.current = true;
-      recordClick({
+      
+      storeClicks({
         id: data?.id,
         originalUrl: data?.org_url
       });
     }
   }, [loadingUrl, data]);
 
-  // Show loading UI while fetching URL or recording click
-  const isLoading = loadingUrl || loadingStats;
+  const isLoading = loadingUrl;
 
   if (isLoading) {
     return (

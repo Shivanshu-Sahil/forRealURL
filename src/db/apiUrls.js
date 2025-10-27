@@ -7,7 +7,7 @@ export async function getUrls(user_id) {
     .eq("user_id", user_id);
 
   if (error) {
-    console.error(error);
+    console.error("Error fetching URLs:", error);
     throw new Error("Unable to load URLs");
   }
 
