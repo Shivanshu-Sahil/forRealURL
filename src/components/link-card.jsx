@@ -9,24 +9,23 @@ import {copyToClipboard} from "@/lib/copyToClipboard";
 const LinkCard = ({url = [], fetchUrls}) => {
   const downloadImage = () => {
     const imageUrl = url?.qr;
-    const fileName = url?.title; // Desired file name for the downloaded image
+    const fileName = url?.title;
 
-    // Create an anchor element
     const anchor = document.createElement("a");
     anchor.href = imageUrl;
     anchor.download = fileName;
-
-    // Append the anchor to the body
     document.body.appendChild(anchor);
-
-    // Trigger the download by simulating a click event
     anchor.click();
-
-    // Remove the anchor from the document
     document.body.removeChild(anchor);
   };
 
   const {loading: loadingDelete, fn: fnDelete} = useFetch(deleteUrl, null);
+  
+  // Get the base URL (use env var or current origin)
+  const baseUrl = import.meta.env.VITE_CUSTOM_URL || window.location.origin;
+  const shortUrlPath = url?.custom_url || url?.short_url;
+  const fullShortUrl = `${baseUrl}/${shortUrlPath}`;
+  const displayUrl = new URL(baseUrl).hostname + "/" + shortUrlPath;
 
   return (
     <div className="flex flex-col md:flex-row gap-5 border border-gray-800 p-6 bg-gray-900 rounded-lg hover:border-gray-700 transition-colors">
@@ -40,7 +39,7 @@ const LinkCard = ({url = [], fetchUrls}) => {
           {url?.title}
         </span>
         <span className="text-lg text-orange-500 font-medium hover:text-orange-400 transition-colors">
-          forReal.URL/{url?.custom_url ? url?.custom_url : url.short_url}
+          {displayUrl}
         </span>
         <span className="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors text-sm">
           <LinkIcon className="w-4 h-4" />
@@ -56,7 +55,7 @@ const LinkCard = ({url = [], fetchUrls}) => {
           className="hover:bg-gray-800 hover:text-orange-500 transition-colors"
           onClick={() =>
             copyToClipboard(
-              `https://forReal.URL/${url?.short_url}`,
+              fullShortUrl,
               '✓ URL copied to clipboard!'
             )
           }

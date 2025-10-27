@@ -62,16 +62,18 @@ export function CreateLink() {
 
   // Generate short URL preview when form values change
   useEffect(() => {
+    const baseUrl = import.meta.env.VITE_CUSTOM_URL || window.location.origin;
+    
     if (formValues.customUrl) {
-      setShortUrl(`${import.meta.env.VITE_CUSTOM_URL || 'https://forReal.URL'}/${formValues.customUrl}`);
+      setShortUrl(`${baseUrl}/${formValues.customUrl}`);
     } else if (formValues.longUrl) {
       // Generate short code once and reuse it
       if (!generatedShortCode) {
         const tempShortCode = Math.random().toString(36).substr(2, 6);
         setGeneratedShortCode(tempShortCode);
-        setShortUrl(`${import.meta.env.VITE_CUSTOM_URL || 'https://forReal.URL'}/${tempShortCode}`);
+        setShortUrl(`${baseUrl}/${tempShortCode}`);
       } else {
-        setShortUrl(`${import.meta.env.VITE_CUSTOM_URL || 'https://forReal.URL'}/${generatedShortCode}`);
+        setShortUrl(`${baseUrl}/${generatedShortCode}`);
       }
     } else {
       setShortUrl("");
