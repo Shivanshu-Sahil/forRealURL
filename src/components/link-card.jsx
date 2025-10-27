@@ -34,16 +34,16 @@ const LinkCard = ({url = [], fetchUrls}) => {
         className="h-32 w-32 object-contain ring-2 ring-orange-500/50 self-start rounded-lg bg-white p-2"
         alt="qr code"
       />
-      <Link to={`/link/${url?.id}`} className="flex flex-col flex-1 gap-2">
-        <span className="text-2xl font-bold hover:text-orange-500 transition-colors">
+      <Link to={`/link/${url?.id}`} className="flex flex-col flex-1 gap-2 min-w-0">
+        <span className="text-2xl font-bold hover:text-orange-500 transition-colors break-words">
           {url?.title}
         </span>
-        <span className="text-lg text-orange-500 font-medium hover:text-orange-400 transition-colors">
+        <span className="text-lg text-orange-500 font-medium hover:text-orange-400 transition-colors break-words">
           {displayUrl}
         </span>
-        <span className="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors text-sm">
-          <LinkIcon className="w-4 h-4" />
-          <span className="truncate">{url?.org_url}</span>
+        <span className="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors text-sm min-w-0">
+          <LinkIcon className="w-4 h-4 flex-shrink-0" />
+          <span className="break-all overflow-hidden">{url?.org_url}</span>
         </span>
         <span className="flex items-end text-gray-500 text-xs mt-auto">
           {new Date(url?.created_at).toLocaleString()}
