@@ -1,13 +1,20 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* SnipLink Neobrutalism Design System
+   Multi-color bold aesthetic with thick borders, hard shadows, flat colors
+   Light cream base with vibrant section colors
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -26,11 +33,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -42,47 +44,457 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  
-  /* Dark theme with orange accents */
-  --background: oklch(0.11 0 0); /* Very dark gray/black */
-  --foreground: oklch(0.95 0 0); /* Off-white */
-  --card: oklch(0.16 0 0); /* Dark gray */
-  --card-foreground: oklch(0.95 0 0); /* Off-white */
-  --popover: oklch(0.16 0 0); /* Dark gray */
-  --popover-foreground: oklch(0.95 0 0); /* Off-white */
-  --primary: oklch(0.62 0.213 29.234); /* Orange */
-  --primary-foreground: oklch(0.11 0 0); /* Very dark */
-  --secondary: oklch(0.22 0 0); /* Slightly lighter dark */
-  --secondary-foreground: oklch(0.95 0 0); /* Off-white */
-  --muted: oklch(0.22 0 0); /* Slightly lighter dark */
-  --muted-foreground: oklch(0.62 0 0); /* Medium gray */
-  --accent: oklch(0.62 0.213 29.234); /* Orange */
-  --accent-foreground: oklch(0.11 0 0); /* Very dark */
-  --destructive: oklch(0.704 0.191 22.216); /* Red */
-  --border: oklch(1 0 0 / 10%); /* Subtle light border */
-  --input: oklch(0.2 0 0); /* Dark input background */
-  --ring: oklch(0.62 0.213 29.234); /* Orange ring */
-  --chart-1: oklch(0.62 0.213 29.234); /* Orange */
-  --chart-2: oklch(0.696 0.17 162.48); /* Teal */
-  --chart-3: oklch(0.769 0.188 70.08); /* Green */
-  --chart-4: oklch(0.627 0.265 303.9); /* Purple */
-  --chart-5: oklch(0.645 0.246 16.439); /* Red-orange */
-  --sidebar: oklch(0.16 0 0); /* Dark gray */
-  --sidebar-foreground: oklch(0.95 0 0); /* Off-white */
-  --sidebar-primary: oklch(0.62 0.213 29.234); /* Orange */
-  --sidebar-primary-foreground: oklch(0.11 0 0); /* Very dark */
-  --sidebar-accent: oklch(0.22 0 0); /* Slightly lighter dark */
-  --sidebar-accent-foreground: oklch(0.95 0 0); /* Off-white */
-  --sidebar-border: oklch(1 0 0 / 10%); /* Subtle light border */
-  --sidebar-ring: oklch(0.62 0.213 29.234); /* Orange ring */
+  /* Core backgrounds - Cream/Off-white */
+  --background: 40 33% 96%;
+  --foreground: 0 0% 9%;
+
+  /* Card surfaces */
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 9%;
+
+  /* Primary - Electric Yellow */
+  --primary: 52 100% 50%;
+  --primary-foreground: 0 0% 9%;
+
+  /* Secondary - Soft pink for forms */
+  --secondary: 350 100% 95%;
+  --secondary-foreground: 0 0% 9%;
+
+  /* Muted - Light gray */
+  --muted: 40 20% 90%;
+  --muted-foreground: 0 0% 35%;
+
+  /* Accent - Hot Pink */
+  --accent: 330 100% 60%;
+  --accent-foreground: 0 0% 100%;
+
+  /* Destructive - Bold red */
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Success - Lime green */
+  --success: 120 80% 45%;
+  --success-foreground: 0 0% 100%;
+
+  /* Neobrutalism section colors */
+  --neo-yellow: 52 100% 50%;
+  --neo-pink: 330 100% 70%;
+  --neo-green: 150 80% 50%;
+  --neo-blue: 200 100% 60%;
+  --neo-coral: 15 100% 65%;
+  --neo-purple: 270 80% 65%;
+  --neo-cream: 40 33% 96%;
+
+  /* Borders and inputs - Black for neobrutalism */
+  --border: 0 0% 0%;
+  --input: 0 0% 100%;
+  --ring: 0 0% 0%;
+
+  --radius: 0px;
+
+  /* Sidebar */
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 0 0% 9%;
+  --sidebar-primary: 52 100% 50%;
+  --sidebar-primary-foreground: 0 0% 9%;
+  --sidebar-accent: 330 100% 70%;
+  --sidebar-accent-foreground: 0 0% 9%;
+  --sidebar-border: 0 0% 0%;
+  --sidebar-ring: 0 0% 0%;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+.dark {
+  /* Dark mode - invert to dark background */
+  --background: 0 0% 9%;
+  --foreground: 40 33% 96%;
+  --card: 0 0% 12%;
+  --card-foreground: 40 33% 96%;
+  --popover: 0 0% 12%;
+  --popover-foreground: 40 33% 96%;
+  --muted: 0 0% 20%;
+  --muted-foreground: 40 20% 65%;
+  --border: 40 33% 96%;
+}
+
+/* Base styles */
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar - chunky neobrutalism */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+  border-left: 3px solid hsl(var(--border));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground));
+  border: 3px solid hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent));
+}
+
+/* Neobrutalism card - thick border + hard shadow */
+.neo-card {
+  position: relative;
+  background-color: hsl(var(--card));
+  border: 3px solid hsl(var(--foreground));
+  box-shadow: 6px 6px 0px hsl(var(--foreground));
+  transition: all 0.15s ease;
+}
+
+.neo-card:hover {
+  box-shadow: 8px 8px 0px hsl(var(--foreground));
+  transform: translate(-2px, -2px);
+}
+
+/* Neo button base */
+.neo-button {
+  position: relative;
+  border: 3px solid hsl(var(--foreground));
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 4px 4px 0px hsl(var(--foreground));
+  transition: all 0.1s ease;
+}
+
+.neo-button:hover {
+  box-shadow: 2px 2px 0px hsl(var(--foreground));
+  transform: translate(2px, 2px);
+}
+
+.neo-button:active {
+  box-shadow: 0px 0px 0px hsl(var(--foreground));
+  transform: translate(4px, 4px);
+}
+
+/* Neo input */
+.neo-input {
+  background-color: hsl(var(--input));
+  border: 3px solid hsl(var(--foreground));
+  padding: 0.75rem 1rem;
+  color: hsl(var(--foreground));
+  box-shadow: 4px 4px 0px hsl(var(--foreground));
+  transition: all 0.15s ease;
+}
+
+.neo-input::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+.neo-input:focus {
+  outline: none;
+  box-shadow: 6px 6px 0px hsl(var(--foreground));
+  transform: translate(-2px, -2px);
+}
+
+/* Section backgrounds */
+.bg-neo-yellow {
+  background-color: hsl(var(--neo-yellow));
+}
+
+.bg-neo-pink {
+  background-color: hsl(var(--neo-pink));
+}
+
+.bg-neo-green {
+  background-color: hsl(var(--neo-green));
+}
+
+.bg-neo-blue {
+  background-color: hsl(var(--neo-blue));
+}
+
+.bg-neo-coral {
+  background-color: hsl(var(--neo-coral));
+}
+
+.bg-neo-purple {
+  background-color: hsl(var(--neo-purple));
+}
+
+.bg-neo-cream {
+  background-color: hsl(var(--neo-cream));
+}
+
+/* Bold display text */
+.display-text {
+  font-family: 'Archivo Black', 'Space Grotesk', sans-serif;
+  font-weight: 400;
+}
+
+/* Stat card neobrutalism */
+.stat-card {
+  position: relative;
+  background-color: hsl(var(--card));
+  border: 3px solid hsl(var(--foreground));
+  box-shadow: 6px 6px 0px hsl(var(--foreground));
+  transition: all 0.15s ease;
+  padding: 1.5rem;
+}
+
+.stat-card:hover {
+  box-shadow: 8px 8px 0px hsl(var(--foreground));
+  transform: translate(-2px, -2px);
+}
+
+/* Link card */
+.link-card {
+  position: relative;
+  background-color: hsl(var(--card));
+  border: 3px solid hsl(var(--foreground));
+  box-shadow: 6px 6px 0px hsl(var(--foreground));
+  transition: all 0.15s ease;
+  padding: 1rem;
+}
+
+.link-card:hover {
+  box-shadow: 8px 8px 0px hsl(var(--foreground));
+  transform: translate(-2px, -2px);
+}
+
+.link-card .actions {
+  opacity: 1;
+}
+
+/* Chart tooltip */
+.chart-tooltip {
+  position: relative;
+  background-color: hsl(var(--card));
+  border: 3px solid hsl(var(--foreground));
+  box-shadow: 4px 4px 0px hsl(var(--foreground));
+  padding: 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Geometric patterns */
+.pattern-grid {
+  background-image: 
+    linear-gradient(hsl(var(--foreground) / 0.05) 2px, transparent 2px),
+    linear-gradient(90deg, hsl(var(--foreground) / 0.05) 2px, transparent 2px);
+  background-size: 40px 40px;
+}
+
+.pattern-dots {
+  background-image: radial-gradient(hsl(var(--foreground) / 0.15) 2px, transparent 2px);
+  background-size: 20px 20px;
+}
+
+/* Zigzag border */
+.zigzag-border {
+  background: linear-gradient(135deg, hsl(var(--foreground)) 25%, transparent 25%) -20px 0,
+              linear-gradient(225deg, hsl(var(--foreground)) 25%, transparent 25%) -20px 0,
+              linear-gradient(315deg, hsl(var(--foreground)) 25%, transparent 25%),
+              linear-gradient(45deg, hsl(var(--foreground)) 25%, transparent 25%);
+  background-size: 40px 20px;
+  background-color: hsl(var(--background));
+}
+
+/* Border utilities */
+.border-3 {
+  border-width: 3px;
+}
+
+.border-4 {
+  border-width: 4px;
+}
+
+/* Hard shadows */
+.shadow-neo {
+  box-shadow: 4px 4px 0px hsl(var(--foreground));
+}
+
+.shadow-neo-lg {
+  box-shadow: 6px 6px 0px hsl(var(--foreground));
+}
+
+.shadow-neo-xl {
+  box-shadow: 8px 8px 0px hsl(var(--foreground));
+}
+
+/* Hover transforms */
+.hover-bounce {
+  transition: all 0.15s ease;
+}
+
+.hover-bounce:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px hsl(var(--foreground));
+}
+
+.hover-press {
+  transition: all 0.1s ease;
+}
+
+.hover-press:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px hsl(var(--foreground));
+}
+
+.hover-press:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px hsl(var(--foreground));
+}
+
+/* Rotate slightly for playful feel */
+.rotate-slight {
+  transform: rotate(-1deg);
+}
+
+.rotate-slight-right {
+  transform: rotate(1deg);
+}
+
+.-rotate-slight {
+  transform: rotate(-2deg);
+}
+
+/* Keyframe animations */
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
   }
-  body {
-    @apply bg-background text-foreground;
+  50% {
+    transform: scale(1.02) translateY(-5px);
   }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.4s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out forwards;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+/* Staggered animation delays */
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animate-delay-400 {
+  animation-delay: 400ms;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fade-in 0.4s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fade-in 0.4s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-3 {
+  animation: fade-in 0.4s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+/* Scale in animation */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out forwards;
+}
+
+/* Slide in from right */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out forwards;
 }

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Link as LinkIcon, Plus, LogOut } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link as LinkIcon, Plus, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UrlState } from '@/context/index';
 import { logout as logoutAPI } from '@/db/apiAuth';
@@ -8,57 +8,77 @@ import useFetch from '@/hooks/use-fetch';
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated, fetchUser } = UrlState();
   const { loading: isLoggingOut, execute: fnLogout } = useFetch(logoutAPI);
+  
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = () => {
     fnLogout().then(() => {
-      fetchUser();
+      fetchUser(); // CRITICAL: Update auth state after logout
       navigate("/");
     }).catch((error) => {
       console.error("Logout error:", error);
     });
   };
 
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/dashboard", label: "Dashboard" },
+  ];
+
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <header className="border-b border-gray-800 bg-gray-950 sticky top-0 z-50">
+    <header 
+      className={`bg-card border-b-3 border-foreground sticky top-0 z-50 transition-all duration-200 ${
+        isScrolled ? "shadow-neo" : ""
+      }`}
+    >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        {/* Logo/Brand */}
-        <Link 
-          to="/" 
-          className="flex items-center gap-2 group"
-        >
-          <div className="p-2 bg-orange-500 rounded-lg group-hover:bg-orange-600 transition-colors">
-            <LinkIcon className="h-5 w-5 text-gray-950" />
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2 group">
+          <div className="p-2 bg-neo-yellow border-3 border-foreground shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+            <LinkIcon className="h-5 w-5 text-foreground" />
           </div>
-          <span className="text-xl font-semibold text-white">forReal.URL</span>
+          <span className="text-xl font-bold text-foreground">forReal.URL</span>
         </Link>
 
-        {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link 
-            to="/" 
-            className="text-sm font-medium text-gray-400 hover:text-orange-400 transition-colors"
-          >
-            Home
-          </Link>
-          <Link 
-            to="/dashboard" 
-            className="text-sm font-medium text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-1"
-          >
-            <LinkIcon className="h-4 w-4" />
-            Dashboard
-          </Link>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-2">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className={`px-4 py-2 text-sm font-bold uppercase tracking-wide transition-all ${
+                isActive(link.href)
+                  ? "bg-neo-pink border-3 border-foreground shadow-neo-sm"
+                  : "hover:bg-muted border-3 border-transparent hover:border-foreground"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex items-center gap-3">
+        {/* Desktop Auth Buttons */}
+        <div className="hidden md:flex items-center gap-3">
           {isAuthenticated && (
             <Button 
               variant="outline" 
               size="sm"
               onClick={() => navigate("/dashboard")}
-              className="gap-2 border-gray-700 text-gray-300 hover:bg-gray-800 transition-all duration-200 animate-in fade-in slide-in-from-right-2"
+              className="gap-2 neo-button bg-neo-green text-foreground"
             >
               <Plus className="h-4 w-4" />
               <span className="hidden sm:inline">Create</span>
@@ -69,7 +89,7 @@ const Header = () => {
               size="sm"
               onClick={handleLogout}
               disabled={isLoggingOut}
-              className="bg-red-600 hover:bg-red-700 text-white transition-all duration-200 animate-in fade-in slide-in-from-right-2 gap-2"
+              className="neo-button bg-destructive text-destructive-foreground gap-2"
             >
               <LogOut className="h-4 w-4" />
               <span className="hidden sm:inline">{isLoggingOut ? "Logging out..." : "Logout"}</span>
@@ -80,7 +100,7 @@ const Header = () => {
                 variant="outline" 
                 size="sm"
                 onClick={() => navigate("/dashboard")}
-                className="gap-2 border-gray-700 text-gray-300 hover:bg-gray-800"
+                className="gap-2 neo-button bg-card text-foreground"
               >
                 <Plus className="h-4 w-4" />
                 <span className="hidden sm:inline">Create</span>
@@ -88,14 +108,96 @@ const Header = () => {
               <Button 
                 size="sm"
                 onClick={() => navigate("/auth")}
-                className="bg-orange-500 hover:bg-orange-600 text-gray-950"
+                className="neo-button bg-primary text-primary-foreground"
               >
                 Sign In
               </Button>
             </>
           )}
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2 border-3 border-foreground bg-card shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
+        </button>
       </nav>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-neo-cream border-b-3 border-foreground animate-slide-up">
+          <nav className="container mx-auto px-4 py-4 flex flex-col gap-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`px-4 py-3 text-sm font-bold uppercase tracking-wide border-3 border-foreground transition-colors ${
+                  isActive(link.href)
+                    ? "bg-neo-pink"
+                    : "bg-card hover:bg-muted"
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="border-t-3 border-foreground my-2" />
+            {isAuthenticated ? (
+              <>
+                <button
+                  onClick={() => {
+                    navigate("/dashboard");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="px-4 py-3 text-sm font-bold uppercase bg-neo-green border-3 border-foreground text-left flex items-center gap-2"
+                >
+                  <Plus className="h-4 w-4" />
+                  Create Link
+                </button>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  disabled={isLoggingOut}
+                  className="px-4 py-3 text-sm font-bold uppercase bg-destructive text-destructive-foreground border-3 border-foreground text-left flex items-center gap-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  {isLoggingOut ? "Logging out..." : "Logout"}
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    navigate("/dashboard");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="px-4 py-3 text-sm font-bold uppercase bg-card border-3 border-foreground hover:bg-muted text-left flex items-center gap-2"
+                >
+                  <Plus className="h-4 w-4" />
+                  Create
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/auth");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="px-4 py-3 text-sm font-bold uppercase bg-primary text-primary-foreground border-3 border-foreground text-center"
+                >
+                  Sign In
+                </button>
+              </>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
