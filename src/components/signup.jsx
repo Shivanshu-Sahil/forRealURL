@@ -1,10 +1,9 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
-import { Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User, Eye, EyeOff, Loader2 } from "lucide-react";
 import Error from "./error";
 import useFetch from "@/hooks/use-fetch";
 import { UrlState } from "@/context/index";
@@ -18,6 +17,8 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { fetchUser } = UrlState();
@@ -32,7 +33,6 @@ const Signup = () => {
     if (error === null && data) {
       fetchUser();
       navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ""}`);
-
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, data]);
@@ -66,7 +66,7 @@ const Signup = () => {
       });
 
       await schema.validate(formData, { abortEarly: false });
-      
+
       // Trigger API call
       await performSignup();
     } catch (e) {
@@ -78,106 +78,167 @@ const Signup = () => {
     }
   };
 
-  return (
-    <Card className="bg-gray-800 border-gray-700">
-      <CardHeader>
-        <CardTitle className="text-white">Create Account</CardTitle>
-        <CardDescription className="text-gray-400">
-          Sign up to start using forReal.URL
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {error && (
-          <div className="mx-0 p-3 rounded-md bg-red-500/10 border border-red-500/30">
-            <Error message={error} />
-          </div>
-        )}
+  // Password strength calculator
+  const passwordStrength = () => {
+    const pwd = formData.password;
+    if (pwd.length === 0) return { width: "0%", color: "bg-muted", text: "" };
+    if (pwd.length < 6) return { width: "25%", color: "bg-destructive", text: "Weak" };
+    if (pwd.length < 10) return { width: "50%", color: "bg-neo-yellow", text: "Fair" };
+    if (pwd.length < 14) return { width: "75%", color: "bg-neo-blue", text: "Good" };
+    return { width: "100%", color: "bg-neo-green", text: "Strong" };
+  };
 
-        {/* Name Input */}
+  const strength = passwordStrength();
+
+  return (
+    <form onSubmit={handleSignup} className="space-y-6">
+      <div className="space-y-2">
+        <h2 className="text-2xl font-display text-foreground">Create Account</h2>
+        <p className="text-muted-foreground font-medium">
+          Sign up to start using forReal.URL
+        </p>
+      </div>
+
+      {error && (
+        <div className="p-3 bg-destructive text-destructive-foreground border-3 border-foreground text-sm font-bold">
+          <Error message={error} />
+        </div>
+      )}
+
+      <div className="space-y-4">
+        {/* Name */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-300">Full Name</label>
+          <label htmlFor="name" className="text-foreground font-bold uppercase text-xs tracking-wide">
+            Full Name
+          </label>
           <div className="relative">
-            <User className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground" />
             <Input
+              id="name"
               name="name"
               type="text"
-              placeholder="Enter your full name"
+              placeholder="John Doe"
               value={formData.name}
               onChange={handleInputChange}
-              className="pl-10 bg-gray-700 border-gray-600 text-white placeholder:text-gray-500 focus:border-orange-500"
+              className="pl-12"
             />
           </div>
           {errors.name && <Error message={errors.name} />}
         </div>
 
-        {/* Email Input */}
+        {/* Email */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-300">Email</label>
+          <label htmlFor="email" className="text-foreground font-bold uppercase text-xs tracking-wide">
+            Email
+          </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground" />
             <Input
+              id="email"
               name="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="you@example.com"
               value={formData.email}
               onChange={handleInputChange}
-              className="pl-10 bg-gray-700 border-gray-600 text-white placeholder:text-gray-500 focus:border-orange-500"
+              className="pl-12"
             />
           </div>
           {errors.email && <Error message={errors.email} />}
         </div>
 
-        {/* Password Input */}
+        {/* Password */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-300">Password</label>
+          <label htmlFor="password" className="text-foreground font-bold uppercase text-xs tracking-wide">
+            Password
+          </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground" />
             <Input
+              id="password"
               name="password"
-              type="password"
-              placeholder="Create a password"
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••"
               value={formData.password}
               onChange={handleInputChange}
-              className="pl-10 bg-gray-700 border-gray-600 text-white placeholder:text-gray-500 focus:border-orange-500"
+              className="pl-12 pr-12"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground hover:text-muted-foreground transition-colors"
+            >
+              {showPassword ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
+            </button>
           </div>
+          {/* Password strength indicator */}
+          {formData.password && (
+            <div className="space-y-1">
+              <div className="h-2 bg-muted border-2 border-foreground overflow-hidden">
+                <div
+                  className={`h-full ${strength.color} transition-all duration-300`}
+                  style={{ width: strength.width }}
+                />
+              </div>
+              <p className="text-xs text-foreground font-bold">
+                Password strength: <span>{strength.text}</span>
+              </p>
+            </div>
+          )}
           {errors.password && <Error message={errors.password} />}
         </div>
 
-        {/* Confirm Password Input */}
+        {/* Confirm Password */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-300">Confirm Password</label>
+          <label htmlFor="confirmPassword" className="text-foreground font-bold uppercase text-xs tracking-wide">
+            Confirm Password
+          </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground" />
             <Input
+              id="confirmPassword"
               name="confirmPassword"
-              type="password"
-              placeholder="Confirm your password"
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="••••••••"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              className="pl-10 bg-gray-700 border-gray-600 text-white placeholder:text-gray-500 focus:border-orange-500"
+              className="pl-12 pr-12"
             />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground hover:text-muted-foreground transition-colors"
+            >
+              {showConfirmPassword ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
+            </button>
           </div>
           {errors.confirmPassword && <Error message={errors.confirmPassword} />}
         </div>
-      </CardContent>
-
-      <div className="px-6 py-4 border-t border-gray-700">
-        <Button
-          onClick={handleSignup}
-          disabled={loading}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-gray-950 font-medium"
-        >
-          {loading ? "Creating account..." : "Create Account"}
-        </Button>
       </div>
 
-      <div className="px-6 pb-4">
-        <p className="text-xs text-gray-500 text-center">
-          By signing up, you agree to our Terms of Service
-        </p>
-      </div>
-    </Card>
+      <Button
+        type="submit"
+        disabled={loading}
+        className="w-full h-12 bg-neo-pink text-foreground border-3 border-foreground shadow-neo hover:shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px]"
+      >
+        {loading ? (
+          <Loader2 className="w-5 h-5 animate-spin" />
+        ) : (
+          "Create Account"
+        )}
+      </Button>
+
+      <p className="text-xs text-muted-foreground text-center font-medium">
+        By signing up, you agree to our Terms of Service
+      </p>
+    </form>
   );
 };
 
