@@ -28,31 +28,34 @@ const LinkCard = ({url = [], fetchUrls}) => {
   const displayUrl = new URL(baseUrl).hostname + "/" + shortUrlPath;
 
   return (
-    <div className="flex flex-col md:flex-row gap-5 border border-gray-800 p-6 bg-gray-900 rounded-lg hover:border-gray-700 transition-colors">
-      <img
-        src={url?.qr}
-        className="h-32 w-32 object-contain ring-2 ring-orange-500/50 self-start rounded-lg bg-white p-2"
-        alt="qr code"
-      />
+    <div className="flex flex-col md:flex-row gap-5 border-3 border-foreground bg-card p-6 shadow-neo hover:shadow-neo-xl hover:-translate-x-1 hover:-translate-y-1 transition-all">
+      <div className="w-32 h-32 flex-shrink-0 bg-neo-yellow border-3 border-foreground shadow-neo-sm p-2">
+        <img
+          src={url?.qr}
+          className="w-full h-full object-contain"
+          alt="qr code"
+        />
+      </div>
       <Link to={`/link/${url?.id}`} className="flex flex-col flex-1 gap-2 min-w-0">
-        <span className="text-2xl font-bold hover:text-orange-500 transition-colors break-words">
+        <span className="text-2xl font-display text-foreground hover:text-primary transition-colors break-words">
           {url?.title}
         </span>
-        <span className="text-lg text-orange-500 font-medium hover:text-orange-400 transition-colors break-words">
+        <span className="text-lg text-primary font-bold hover:underline underline-offset-4 transition-colors break-words">
           {displayUrl}
         </span>
-        <span className="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors text-sm min-w-0">
+        <span className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm min-w-0 font-medium">
           <LinkIcon className="w-4 h-4 flex-shrink-0" />
           <span className="break-all overflow-hidden">{url?.org_url}</span>
         </span>
-        <span className="flex items-end text-gray-500 text-xs mt-auto">
+        <span className="flex items-end text-muted-foreground text-xs mt-auto font-bold uppercase">
           {new Date(url?.created_at).toLocaleString()}
         </span>
       </Link>
       <div className="flex md:flex-col gap-2">
         <Button
           variant="ghost"
-          className="hover:bg-gray-800 hover:text-orange-500 transition-colors"
+          size="icon"
+          className="h-10 w-10 border-2 border-foreground bg-neo-green hover:bg-neo-green/80"
           onClick={() =>
             copyToClipboard(
               fullShortUrl,
@@ -60,18 +63,20 @@ const LinkCard = ({url = [], fetchUrls}) => {
             )
           }
         >
-          <Copy className="w-4 h-4" />
+          <Copy className="w-4 h-4 text-foreground" />
         </Button>
         <Button 
           variant="ghost"
-          className="hover:bg-gray-800 hover:text-orange-500 transition-colors"
+          size="icon"
+          className="h-10 w-10 border-2 border-foreground bg-neo-blue hover:bg-neo-blue/80"
           onClick={downloadImage}
         >
-          <Download className="w-4 h-4" />
+          <Download className="w-4 h-4 text-foreground" />
         </Button>
         <Button
           variant="ghost"
-          className="hover:bg-gray-800 hover:text-red-500 transition-colors"
+          size="icon"
+          className="h-10 w-10 border-2 border-foreground bg-destructive hover:bg-destructive/80"
           onClick={async () => {
             try {
               await fnDelete(url.id);
@@ -83,9 +88,9 @@ const LinkCard = ({url = [], fetchUrls}) => {
           disabled={loadingDelete}
         >
           {loadingDelete ? (
-            <div className="w-4 h-4 border-2 border-gray-700 border-t-red-500 rounded-full animate-spin"></div>
+            <div className="w-4 h-4 border-2 border-foreground border-t-transparent rounded-full animate-spin"></div>
           ) : (
-            <Trash className="w-4 h-4" />
+            <Trash className="w-4 h-4 text-destructive-foreground" />
           )}
         </Button>
       </div>

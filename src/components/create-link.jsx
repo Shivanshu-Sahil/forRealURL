@@ -1,25 +1,24 @@
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {Input} from "@/components/ui/input";
-import {Card} from "./ui/card";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import { Input } from "@/components/ui/input";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import Error from "./error";
 import * as yup from "yup";
 import useFetch from "@/hooks/use-fetch";
-import {createUrl} from "@/db/apiUrls";
-import {UrlState} from "@/context";
-import {QRCode} from "react-qrcode-logo";
+import { createUrl } from "@/db/apiUrls";
+import { UrlState } from "@/context";
+import { QRCode } from "react-qrcode-logo";
+import { Loader2, Link2, Sparkles } from "lucide-react";
 
 export function CreateLink() {
-  const {user} = UrlState();
+  const { user } = UrlState();
 
   const navigate = useNavigate();
   const ref = useRef();
@@ -63,7 +62,7 @@ export function CreateLink() {
   // Generate short URL preview when form values change
   useEffect(() => {
     const baseUrl = import.meta.env.VITE_CUSTOM_URL || window.location.origin;
-    
+
     if (formValues.customUrl) {
       setShortUrl(`${baseUrl}/${formValues.customUrl}`);
     } else if (formValues.longUrl) {
@@ -90,27 +89,27 @@ export function CreateLink() {
 
   const createNewLink = async () => {
     setErrors([]);
-    
+
     if (!user?.id) {
-      setErrors({form: "Please log in to create a link"});
+      setErrors({ form: "Please log in to create a link" });
       return;
     }
-    
+
     try {
-      await schema.validate(formValues, {abortEarly: false});
-      
+      await schema.validate(formValues, { abortEarly: false });
+
       // Use the already generated short code from state
       const shortCode = generatedShortCode || Math.random().toString(36).substr(2, 6);
-      
+
       const canvas = ref.current.canvasRef.current;
       const blob = await new Promise((resolve) => canvas.toBlob(resolve));
-      
+
       await fnCreateUrl(
         {
-          ...formValues, 
+          ...formValues,
           user_id: user.id,
           short_url: shortCode
-        }, 
+        },
         blob
       );
     } catch (e) {
@@ -124,6 +123,10 @@ export function CreateLink() {
     }
   };
 
+  // Get base URL for display
+  const baseUrl = import.meta.env.VITE_CUSTOM_URL || window.location.origin;
+  const displayDomain = new URL(baseUrl).hostname;
+
   return (
     <Dialog
       defaultOpen={longLink}
@@ -132,86 +135,119 @@ export function CreateLink() {
       }}
     >
       <DialogTrigger asChild>
-        <Button className="bg-orange-500 hover:bg-orange-600 text-gray-950 font-medium">
+        <Button className="bg-neo-pink text-foreground border-3 border-foreground shadow-neo hover:shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px]">
+          <Sparkles className="w-5 h-5 mr-2" />
           Create New Link
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md bg-gray-900 border-gray-800 text-white">
-        <DialogHeader>
-          <DialogTitle className="font-bold text-2xl text-white">Create New Link</DialogTitle>
-        </DialogHeader>
-        
-        <div className="space-y-4">
+      <DialogContent className="sm:max-w-lg bg-neo-cream border-3 border-foreground shadow-neo-xl p-0 overflow-hidden">
+        {/* Header */}
+        <div className="bg-neo-yellow border-b-3 border-foreground p-6">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-card border-3 border-foreground flex items-center justify-center">
+                <Link2 className="w-6 h-6 text-foreground" />
+              </div>
+              <div>
+                <DialogTitle className="text-xl font-bold text-foreground">
+                  Create Short Link
+                </DialogTitle>
+                <p className="text-sm text-foreground font-medium">
+                  Transform your long URL into a powerful short link
+                </p>
+              </div>
+            </div>
+          </DialogHeader>
+        </div>
+
+        <div className="p-6 space-y-5">
+          {/* QR Code Preview */}
           {formValues?.longUrl && (
-            <div className="flex justify-center p-4 bg-white rounded-lg">
-              <QRCode 
-                ref={ref} 
-                size={200} 
+            <div className="flex justify-center p-4 bg-card border-3 border-foreground shadow-neo">
+              <QRCode
+                ref={ref}
+                size={200}
                 value={shortUrl || formValues?.longUrl}
               />
             </div>
           )}
 
+          {error && <Error message={error.message} />}
+
+          {/* Title */}
           <div className="space-y-2">
+            <label htmlFor="title" className="text-foreground font-bold uppercase text-xs tracking-wide">
+              Link Title
+            </label>
             <Input
               id="title"
-              placeholder="Short Link's Title"
+              placeholder="My Awesome Link"
               value={formValues.title}
               onChange={handleChange}
-              className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 focus:border-orange-500"
             />
             {errors.title && <Error message={errors.title} />}
           </div>
 
+          {/* Long URL */}
           <div className="space-y-2">
-            <Input
-              id="longUrl"
-              placeholder="Enter your Loooong URL"
-              value={formValues.longUrl}
-              onChange={handleChange}
-              className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 focus:border-orange-500"
-            />
+            <label htmlFor="longUrl" className="text-foreground font-bold uppercase text-xs tracking-wide">
+              Destination URL
+            </label>
+            <div className="relative">
+              <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground" />
+              <Input
+                id="longUrl"
+                placeholder="https://example.com/your-very-long-url"
+                value={formValues.longUrl}
+                onChange={handleChange}
+                className="pl-12"
+              />
+            </div>
             {errors.longUrl && <Error message={errors.longUrl} />}
           </div>
 
+          {/* Custom Alias */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Card className="p-2 bg-gray-800 border-gray-700 text-gray-400 text-sm">
-                forReal.URL
-              </Card>
-              <Card className="p-2 bg-gray-800 border-gray-700 text-gray-400 text-sm">
-                /
-              </Card>
+            <label htmlFor="customUrl" className="text-foreground font-bold uppercase text-xs tracking-wide flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-neo-pink" />
+              Custom Alias
+              <span className="text-muted-foreground normal-case font-medium">(optional)</span>
+            </label>
+            <div className="flex items-center">
+              <span className="h-12 px-4 bg-muted border-3 border-foreground border-r-0 flex items-center text-sm text-foreground font-bold">
+                {displayDomain}/
+              </span>
               <Input
                 id="customUrl"
-                placeholder="custom-alias (optional)"
+                placeholder="my-custom-link"
                 value={formValues.customUrl}
                 onChange={handleChange}
-                className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 focus:border-orange-500"
+                className="border-l-0"
               />
             </div>
+            {errors.customUrl && <Error message={errors.customUrl} />}
           </div>
 
-          {error && <Error message={error.message} />}
-        </div>
-
-        <DialogFooter className="sm:justify-start">
+          {/* Submit Button */}
           <Button
             type="button"
             onClick={createNewLink}
             disabled={loading}
-            className="w-full bg-orange-500 hover:bg-orange-600 text-gray-950 font-medium disabled:opacity-50"
+            className="w-full h-12 bg-neo-yellow text-foreground border-3 border-foreground shadow-neo hover:shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px]"
           >
             {loading ? (
-              <div className="flex items-center justify-center gap-2">
-                <div className="w-4 h-4 border-2 border-gray-950 border-t-transparent rounded-full animate-spin"></div>
+              <>
+                <Loader2 className="w-5 h-5 animate-spin mr-2" />
                 Creating...
-              </div>
+              </>
             ) : (
-              "Create Link"
+              <>
+                Create Short Link
+                <Sparkles className="ml-2 w-5 h-5" />
+              </>
             )}
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -9,13 +9,13 @@ import { getUrl, deleteUrl } from "@/db/apiUrls";
 import { getClicksForUrl } from "@/db/apiClicks";
 import DeviceStats from "@/components/deviceStats";
 import LocationStats from "@/components/locationStats";
-import {copyToClipboard} from "@/lib/copyToClipboard";
+import { copyToClipboard } from "@/lib/copyToClipboard";
 
 const Link = () => {
   const navigate = useNavigate();
   const { user } = UrlState();
   const { id } = useParams();
-  
+
   // Fetch URL details
   const {
     loading,
@@ -41,7 +41,7 @@ const Link = () => {
   const downloadImage = () => {
     const imageUrl = url?.qr;
     if (!imageUrl) return;
-    
+
     const fileName = `${url?.title || 'qrcode'}.png`;
     const anchor = document.createElement("a");
     anchor.href = imageUrl;
@@ -101,87 +101,86 @@ const Link = () => {
     <div className="container mx-auto py-8 px-4">
       {/* Loading indicator */}
       {(loading || loadingStats) && (
-        <div className="w-full h-1 mb-4">
-          <div className="h-full bg-orange-500 animate-pulse rounded"></div>
+        <div className="w-full h-2 mb-4 bg-muted border-2 border-foreground overflow-hidden">
+          <div className="h-full bg-primary animate-pulse"></div>
         </div>
       )}
 
-      {/* Rest of the component remains the same */}
       <div className="flex flex-col gap-8 lg:flex-row justify-between">
         {/* URL Details Section */}
         <div className="flex flex-col items-start gap-6 lg:w-2/5">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white">
+          <h1 className="text-4xl sm:text-5xl font-display text-foreground">
             {url?.title || "Loading..."}
           </h1>
-          
+
           {url && (
             <>
               <a
                 href={fullShortUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-2xl sm:text-3xl text-orange-400 font-bold hover:underline flex items-center gap-2"
+                className="text-2xl sm:text-3xl text-primary font-bold hover:underline underline-offset-4 flex items-center gap-2"
               >
                 {fullShortUrl}
                 <ExternalLink className="h-5 w-5" />
               </a>
-              
+
               <a
                 href={url.org_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-300 hover:text-gray-100"
+                className="flex items-start gap-2 text-muted-foreground hover:text-foreground font-medium break-words"
               >
-                <LinkIcon className="h-4 w-4" />
-                <span className="truncate max-w-full">{url.org_url}</span>
+                <LinkIcon className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                <span className="break-all">{url.org_url}</span>
               </a>
-              
-              <span className="text-gray-500 text-sm">
+
+              <span className="text-muted-foreground text-sm font-bold uppercase">
                 Created on {new Date(url.created_at).toLocaleDateString()}
               </span>
-              
-              <div className="flex gap-3 mt-2">
+
+              <div className="flex gap-3 mt-2 flex-wrap">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
-                  className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-orange-400"
+                  className="h-10 border-2 border-foreground bg-neo-green shadow-neo hover:shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
                   onClick={() => copyToClipboard(fullShortUrl, '✓ Short URL copied!')}
                 >
-                  <Copy className="h-4 w-4 mr-2" />
-                  Copy
+                  <Copy className="h-4 w-4 mr-2 text-foreground" />
+                  <span className="text-foreground font-bold">Copy</span>
                 </Button>
-                
+
                 {url.qr && (
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-orange-400"
+                    className="h-10 border-2 border-foreground bg-neo-blue shadow-neo hover:shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
                     onClick={downloadImage}
                   >
-                    <Download className="h-4 w-4 mr-2" />
-                    Download QR
+                    <Download className="h-4 w-4 mr-2 text-foreground" />
+                    <span className="text-foreground font-bold">Download QR</span>
                   </Button>
                 )}
-                
+
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
-                  className="border-gray-700 text-gray-300 hover:bg-red-900 hover:text-red-400 hover:border-red-700"
+                  className="h-10 border-2 border-foreground bg-red-500 shadow-neo hover:shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
                   onClick={handleDelete}
                   disabled={loadingDelete}
                 >
                   {loadingDelete ? (
-                    <div className="w-4 h-4 border-2 border-gray-700 border-t-red-400 rounded-full animate-spin mr-2"></div>
+                    <div className="w-4 h-4 border-2 border-foreground border-t-transparent rounded-full animate-spin mr-2"></div>
                   ) : (
-                    <Trash className="h-4 w-4 mr-2" />
+                    <Trash className="h-4 w-4 mr-2 text-foreground" />
                   )}
-                  Delete
+                  <span className="text-foreground font-bold">Delete</span>
                 </Button>
               </div>
-              
+
               {url.qr && (
                 <div className="mt-4 w-full max-w-xs">
-                  <div className="bg-white p-4 rounded-lg">
+                  <div className="bg-card border-3 border-foreground shadow-neo p-4">
                     <img
                       src={url.qr}
                       className="w-full h-auto object-contain"
@@ -195,32 +194,32 @@ const Link = () => {
         </div>
 
         {/* Stats Section */}
-        <Card className="lg:w-3/5 bg-gray-900 border-gray-800">
-          <CardHeader className="border-b border-gray-800">
-            <CardTitle className="text-xl font-bold text-white">
+        <Card className="lg:w-3/5 bg-card border-3 border-foreground shadow-neo">
+          <CardHeader className="border-b-3 border-foreground">
+            <CardTitle className="text-xl font-bold text-foreground">
               Analytics & Statistics
             </CardTitle>
           </CardHeader>
 
           {loadingStats ? (
             <CardContent className="py-12 flex justify-center">
-              <div className="w-10 h-10 border-4 border-gray-700 border-t-orange-500 rounded-full animate-spin"></div>
+              <div className="w-10 h-10 border-4 border-foreground border-t-primary rounded-full animate-spin"></div>
             </CardContent>
           ) : stats && stats.length > 0 ? (
             <CardContent className="flex flex-col gap-4 pt-4">
-              <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-                <p className="text-xs font-medium text-gray-400 mb-1">Total Clicks</p>
-                <p className="text-3xl font-bold text-orange-400">{stats.length}</p>
+              <div className="bg-neo-blue border-3 border-foreground shadow-neo p-4">
+                <p className="text-xs font-bold text-foreground mb-1 uppercase tracking-wide">Total Clicks</p>
+                <p className="text-3xl font-display text-foreground">{stats.length}</p>
               </div>
 
               <DeviceStats stats={stats} />
               <LocationStats stats={stats} />
             </CardContent>
           ) : (
-            <CardContent className="py-12 text-center text-gray-400">
-              <LinkIcon className="h-12 w-12 mx-auto mb-4 text-gray-600" />
-              <p className="text-lg font-medium">No clicks recorded yet</p>
-              <p className="text-sm text-gray-500 mt-2">
+            <CardContent className="py-12 text-center text-muted-foreground">
+              <LinkIcon className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+              <p className="text-lg font-bold text-foreground uppercase">No clicks recorded yet</p>
+              <p className="text-sm text-muted-foreground mt-2 font-medium">
                 Share your link to start collecting statistics
               </p>
             </CardContent>
