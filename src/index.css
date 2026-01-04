@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -5,8 +6,6 @@
    Multi-color bold aesthetic with thick borders, hard shadows, flat colors
    Light cream base with vibrant section colors
 */
-
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -87,6 +86,7 @@
   --neo-coral: 15 100% 65%;
   --neo-purple: 270 80% 65%;
   --neo-cream: 40 33% 96%;
+  --neo-black: 0 0% 20%;
 
   /* Borders and inputs - Black for neobrutalism */
   --border: 0 0% 0%;
@@ -240,6 +240,43 @@ body {
   background-color: hsl(var(--neo-cream));
 }
 
+.bg-neo-black {
+  background-color: hsl(var(--neo-black));
+}
+
+/* Neo text colors */
+.text-neo-yellow {
+  color: hsl(var(--neo-yellow));
+}
+
+.text-neo-pink {
+  color: hsl(var(--neo-pink));
+}
+
+.text-neo-green {
+  color: hsl(var(--neo-green));
+}
+
+.text-neo-blue {
+  color: hsl(var(--neo-blue));
+}
+
+.text-neo-coral {
+  color: hsl(var(--neo-coral));
+}
+
+.text-neo-purple {
+  color: hsl(var(--neo-purple));
+}
+
+.text-neo-cream {
+  color: hsl(var(--neo-cream));
+}
+
+.text-neo-black {
+  color: hsl(var(--neo-black));
+}
+
 /* Bold display text */
 .display-text {
   font-family: 'Archivo Black', 'Space Grotesk', sans-serif;
@@ -261,25 +298,6 @@ body {
   transform: translate(-2px, -2px);
 }
 
-/* Link card */
-.link-card {
-  position: relative;
-  background-color: hsl(var(--card));
-  border: 3px solid hsl(var(--foreground));
-  box-shadow: 6px 6px 0px hsl(var(--foreground));
-  transition: all 0.15s ease;
-  padding: 1rem;
-}
-
-.link-card:hover {
-  box-shadow: 8px 8px 0px hsl(var(--foreground));
-  transform: translate(-2px, -2px);
-}
-
-.link-card .actions {
-  opacity: 1;
-}
-
 /* Chart tooltip */
 .chart-tooltip {
   position: relative;
@@ -292,7 +310,7 @@ body {
 
 /* Geometric patterns */
 .pattern-grid {
-  background-image: 
+  background-image:
     linear-gradient(hsl(var(--foreground) / 0.05) 2px, transparent 2px),
     linear-gradient(90deg, hsl(var(--foreground) / 0.05) 2px, transparent 2px);
   background-size: 40px 40px;
@@ -306,9 +324,9 @@ body {
 /* Zigzag border */
 .zigzag-border {
   background: linear-gradient(135deg, hsl(var(--foreground)) 25%, transparent 25%) -20px 0,
-              linear-gradient(225deg, hsl(var(--foreground)) 25%, transparent 25%) -20px 0,
-              linear-gradient(315deg, hsl(var(--foreground)) 25%, transparent 25%),
-              linear-gradient(45deg, hsl(var(--foreground)) 25%, transparent 25%);
+    linear-gradient(225deg, hsl(var(--foreground)) 25%, transparent 25%) -20px 0,
+    linear-gradient(315deg, hsl(var(--foreground)) 25%, transparent 25%),
+    linear-gradient(45deg, hsl(var(--foreground)) 25%, transparent 25%);
   background-size: 40px 20px;
   background-color: hsl(var(--background));
 }
@@ -378,9 +396,11 @@ body {
     opacity: 0;
     transform: scale(0.9) translateY(20px);
   }
+
   50% {
     transform: scale(1.02) translateY(-5px);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -392,6 +412,7 @@ body {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -399,9 +420,12 @@ body {
 }
 
 @keyframes wiggle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: rotate(-1deg);
   }
+
   50% {
     transform: rotate(1deg);
   }
@@ -442,6 +466,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -473,6 +498,7 @@ body {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -489,6 +515,7 @@ body {
     opacity: 0;
     transform: translateX(20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
