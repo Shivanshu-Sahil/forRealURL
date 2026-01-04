@@ -174,18 +174,19 @@ const Dashboard = () => {
                 key={url.id}
                 className={`${linkColors[index % 2]} border-3 border-foreground shadow-neo p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:shadow-neo-xl hover:-translate-x-1 hover:-translate-y-1 transition-all`}
               >
-                <div className="flex-1 min-w-0">
+                <Link to={`/link/${url.id}`} className="flex-1 min-w-0 cursor-pointer hover:opacity-80 transition-opacity">
+                  <p className="font-bold text-lg text-foreground mb-1 truncate">{url?.title}</p>
                   <div className="flex items-center gap-2 mb-1">
                     <div className="w-6 h-6 bg-neo-pink border-2 border-foreground flex items-center justify-center">
                       <LinkIcon className="w-3 h-3 text-foreground" />
                     </div>
-                    <span className="font-bold text-foreground">{getDisplayUrl(url)}</span>
+                    <span className="font-bold text-foreground text-sm">{getDisplayUrl(url)}</span>
                   </div>
                   <p className="text-sm text-muted-foreground truncate font-medium">{url?.org_url}</p>
                   <p className="text-xs text-muted-foreground mt-1 font-bold uppercase">
                     {new Date(url?.created_at).toLocaleString()}
                   </p>
-                </div>
+                </Link>
                 <div className="flex items-center gap-6">
                   <div className="text-right">
                     <p className="font-display text-xl text-foreground">
