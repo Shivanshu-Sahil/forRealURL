@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Link2, ArrowLeft } from "lucide-react";
+import { Link2, ArrowLeft, BarChart3, Link2Icon, LinkIcon } from "lucide-react";
 import Login from "@/components/login";
 import Signup from "@/components/signup";
 
@@ -9,77 +9,91 @@ const Auth = () => {
   const initialMode = searchParams.get("mode") === "signup" ? "signup" : "login";
   const [mode, setMode] = useState(initialMode);
 
-  const testimonials = [
-    {
-      quote: "forReal.URL transformed how we track our marketing campaigns. The analytics are unmatched.",
-      author: "Sarah Chen",
-      role: "Head of Marketing, TechCorp",
-    },
-    {
-      quote: "Finally, a link shortener that looks as good as it performs. Our clients love the branded links.",
-      author: "Marcus Williams",
-      role: "Creative Director, BrandStudio",
-    },
-    {
-      quote: "The API integration was seamless. We shortened 1M links in our first month.",
-      author: "Alex Rivera",
-      role: "Lead Developer, StartupX",
-    },
-  ];
-
-  const [currentTestimonial] = useState(0);
-
   return (
     <div className="min-h-screen flex">
-      {/* Left Side - Marketing / Testimonials (Hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-neo-coral border-r-3 border-foreground">
+      {/* Left Side - Features Showcase (Hidden on mobile) */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-neo-black border-r-3 border-neo-cream">
         {/* Scattered shapes */}
-        <div className="absolute top-20 right-20 w-24 h-24 bg-neo-yellow border-3 border-foreground rotate-12" />
-        <div className="absolute bottom-40 left-20 w-32 h-32 bg-neo-pink border-3 border-foreground rounded-full" />
-        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-neo-blue border-3 border-foreground -rotate-12" />
+        <div className="absolute top-20 right-20 w-24 h-24 bg-neo-yellow border-3 border-neo-cream rotate-12" />
+        <div className="absolute bottom-40 left-20 w-32 h-32 bg-neo-pink border-3 border-neo-cream rounded-full" />
+        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-neo-blue border-3 border-neo-cream -rotate-12" />
 
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group w-fit">
-            <div className="w-10 h-10 bg-foreground border-3 border-foreground flex items-center justify-center">
-              <Link2 className="w-5 h-5 text-neo-yellow" />
+            <div className="w-10 h-10 bg-neo-cream border-3 border-neo-cream flex items-center justify-center">
+              <LinkIcon className="w-8 h-8 text-neo-coral" />
             </div>
-            <span className="text-xl font-display text-foreground">
+            <span className="text-xl font-bold text-neo-coral">
               forReal.URL
             </span>
           </Link>
 
-          {/* Testimonial */}
-          <div className="max-w-md">
-            <div className="bg-card border-3 border-foreground shadow-neo-xl p-8 -rotate-1">
-              <blockquote className="text-xl font-bold text-foreground leading-relaxed mb-6">
-                "{testimonials[currentTestimonial].quote}"
-              </blockquote>
-              <div>
-                <p className="font-bold text-foreground">
-                  {testimonials[currentTestimonial].author}
-                </p>
-                <p className="text-muted-foreground font-medium">
-                  {testimonials[currentTestimonial].role}
-                </p>
+          {/* Features Grid */}
+          <div className="bg-neo-cream border-3 border-neo-cream shadow-neo-lg p-6 space-y-4">
+            <h2 className="text-2xl font-bold text-neo-black mb-6">
+              Powerful Features
+            </h2>
+
+            <div className="bg-neo-yellow border-3 border-neo-cream shadow-neo p-4 -rotate-1">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-neo-black border-3 border-neo-cream flex items-center justify-center">
+                  <Link2 className="w-5 h-5 text-neo-yellow" />
+                </div>
+                <div>
+                  <p className="font-bold text-foreground">Custom Short Links</p>
+                  <p className="text-sm text-muted-foreground">Create branded, memorable URLs</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-neo-pink border-3 border-neo-cream shadow-neo p-4 rotate-1">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-neo-black border-3 border-neo-cream flex items-center justify-center">
+                  <svg className="w-5 h-5 text-neo-pink" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                    <rect x="14" y="14" width="4" height="4" />
+                    <rect x="19" y="14" width="2" height="2" />
+                    <rect x="14" y="19" width="2" height="2" />
+                    <rect x="19" y="19" width="2" height="2" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-bold text-foreground">QR Code Generator</p>
+                  <p className="text-sm text-muted-foreground">Download QR codes instantly</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-neo-green border-3 border-neo-cream shadow-neo p-4 -rotate-1">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-neo-black border-3 border-neo-cream flex items-center justify-center">
+                  <BarChart3 className="w-5 h-5 text-neo-green" />
+                </div>
+                <div>
+                  <p className="font-bold text-foreground">Click Analytics</p>
+                  <p className="text-sm text-muted-foreground">Track link performance in real-time</p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Stats */}
           <div className="flex gap-4">
-            <div className="bg-neo-yellow border-3 border-foreground shadow-neo p-4">
-              <p className="text-2xl font-display text-foreground">10B+</p>
-              <p className="text-xs font-bold text-foreground uppercase">Links</p>
+            <div className="bg-neo-yellow border-3 border-neo-cream shadow-neo p-4">
+              <p className="text-2xl font-display text-neo-black">∞</p>
+              <p className="text-xs font-bold text-neo-black uppercase">Links</p>
             </div>
-            <div className="bg-neo-blue border-3 border-foreground shadow-neo p-4">
-              <p className="text-2xl font-display text-foreground">150+</p>
-              <p className="text-xs font-bold text-foreground uppercase">Countries</p>
+            <div className="bg-neo-blue border-3 border-neo-cream shadow-neo p-4">
+              <p className="text-2xl font-display text-neo-black">Free</p>
+              <p className="text-xs font-bold text-neo-black uppercase">Forever</p>
             </div>
-            <div className="bg-neo-green border-3 border-foreground shadow-neo p-4">
-              <p className="text-2xl font-display text-foreground">99.99%</p>
-              <p className="text-xs font-bold text-foreground uppercase">Uptime</p>
+            <div className="bg-neo-green border-3 border-neo-cream shadow-neo p-4">
+              <p className="text-2xl font-display text-neo-black">1-Click</p>
+              <p className="text-xs font-bold text-neo-black uppercase">Actions</p>
             </div>
           </div>
         </div>
@@ -116,8 +130,8 @@ const Auth = () => {
               <button
                 onClick={() => setMode("login")}
                 className={`flex-1 py-3 px-4 text-sm font-bold uppercase tracking-wide transition-all border-r-3 border-foreground ${mode === "login"
-                    ? "bg-neo-pink text-foreground"
-                    : "bg-muted text-muted-foreground hover:bg-secondary"
+                  ? "bg-neo-pink text-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-secondary"
                   }`}
               >
                 Sign In
@@ -125,8 +139,8 @@ const Auth = () => {
               <button
                 onClick={() => setMode("signup")}
                 className={`flex-1 py-3 px-4 text-sm font-bold uppercase tracking-wide transition-all ${mode === "signup"
-                    ? "bg-neo-pink text-foreground"
-                    : "bg-muted text-muted-foreground hover:bg-secondary"
+                  ? "bg-neo-pink text-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-secondary"
                   }`}
               >
                 Create Account
@@ -136,18 +150,6 @@ const Auth = () => {
             {/* Form */}
             {mode === "login" ? <Login /> : <Signup />}
           </div>
-
-          {/* Footer text */}
-          <p className="text-center text-sm text-muted-foreground mt-6 font-medium">
-            By continuing, you agree to our{" "}
-            <a href="#" className="text-foreground font-bold underline underline-offset-4">
-              Terms of Service
-            </a>{" "}
-            and{" "}
-            <a href="#" className="text-foreground font-bold underline underline-offset-4">
-              Privacy Policy
-            </a>
-          </p>
         </div>
       </div>
     </div>
