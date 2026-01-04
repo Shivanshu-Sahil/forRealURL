@@ -11,7 +11,7 @@ const Header = () => {
   const location = useLocation();
   const { isAuthenticated, fetchUser } = UrlState();
   const { loading: isLoggingOut, execute: fnLogout } = useFetch(logoutAPI);
-  
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -40,10 +40,9 @@ const Header = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header 
-      className={`bg-card border-b-3 border-foreground sticky top-0 z-50 transition-all duration-200 ${
-        isScrolled ? "shadow-neo" : ""
-      }`}
+    <header
+      className={`bg-card border-b-3 border-foreground sticky top-0 z-50 transition-all duration-200 ${isScrolled ? "shadow-neo" : ""
+        }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         {/* Logo */}
@@ -60,11 +59,10 @@ const Header = () => {
             <Link
               key={link.href}
               to={link.href}
-              className={`px-4 py-2 text-sm font-bold uppercase tracking-wide transition-all ${
-                isActive(link.href)
-                  ? "bg-neo-pink border-3 border-foreground shadow-neo-sm"
-                  : "hover:bg-muted border-3 border-transparent hover:border-foreground"
-              }`}
+              className={`px-4 py-2 text-sm font-bold uppercase tracking-wide border-3 border-foreground shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all ${isActive(link.href)
+                ? "bg-neo-pink"
+                : "bg-card hover:bg-muted"
+                }`}
             >
               {link.label}
             </Link>
@@ -74,8 +72,8 @@ const Header = () => {
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-3">
           {isAuthenticated && (
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               onClick={() => navigate("/dashboard")}
               className="gap-2 neo-button bg-neo-green text-foreground"
@@ -85,7 +83,7 @@ const Header = () => {
             </Button>
           )}
           {isAuthenticated ? (
-            <Button 
+            <Button
               size="sm"
               onClick={handleLogout}
               disabled={isLoggingOut}
@@ -96,8 +94,8 @@ const Header = () => {
             </Button>
           ) : (
             <>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => navigate("/dashboard")}
                 className="gap-2 neo-button bg-card text-foreground"
@@ -105,7 +103,7 @@ const Header = () => {
                 <Plus className="h-4 w-4" />
                 <span className="hidden sm:inline">Create</span>
               </Button>
-              <Button 
+              <Button
                 size="sm"
                 onClick={() => navigate("/auth")}
                 className="neo-button bg-primary text-primary-foreground"
@@ -137,11 +135,10 @@ const Header = () => {
               <Link
                 key={link.href}
                 to={link.href}
-                className={`px-4 py-3 text-sm font-bold uppercase tracking-wide border-3 border-foreground transition-colors ${
-                  isActive(link.href)
-                    ? "bg-neo-pink"
-                    : "bg-card hover:bg-muted"
-                }`}
+                className={`px-4 py-3 text-sm font-bold uppercase tracking-wide border-3 border-foreground shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all ${isActive(link.href)
+                  ? "bg-neo-pink"
+                  : "bg-card hover:bg-muted"
+                  }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
