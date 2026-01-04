@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
-import './App.css';
 import { UrlProvider } from '@/context';
 import AppLayout from './layouts/layout';
 import Home from './pages/home';
@@ -25,7 +24,7 @@ const router = createBrowserRouter(
 function App() {
   return (
     <UrlProvider>
-      <Toaster 
+      <Toaster
         position="top-center"
         reverseOrder={false}
         gutter={8}
