@@ -59,7 +59,7 @@ const Home = () => {
       icon: Lock,
       title: "Unlimited Links",
       description: "Create unlimited shortened URLs with our free service. All features available to all users.",
-      color: "bg-neo-purple",
+      color: "bg-neo-green",
       size: "",
     },
   ];
