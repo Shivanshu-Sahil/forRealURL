@@ -109,9 +109,12 @@ const Link = () => {
       <div className="flex flex-col gap-8 lg:flex-row justify-between">
         {/* URL Details Section */}
         <div className="flex flex-col items-start gap-6 lg:w-2/5">
-          <h1 className="text-4xl sm:text-5xl font-display text-foreground">
+          <button
+            className="text-4xl sm:text-5xl font-display text-foreground bg-neo-coral border-3 border-foreground shadow-neo px-6 py-3 hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all text-left"
+            onClick={() => copyToClipboard(url?.title || '', '✓ Title copied!')}
+          >
             {url?.title || "Loading..."}
-          </h1>
+          </button>
 
           {url && (
             <>
@@ -194,9 +197,9 @@ const Link = () => {
         </div>
 
         {/* Stats Section */}
-        <Card className="lg:w-3/5 bg-card border-3 border-foreground shadow-neo">
-          <CardHeader className="border-b-3 border-foreground">
-            <CardTitle className="text-xl font-bold text-foreground">
+        <Card className="lg:w-3/5 bg-card border-3 border-foreground shadow-neo pt-0">
+          <CardHeader className="bg-neo-black border-b-3 border-foreground p-4 -mt-6">
+            <CardTitle className="text-xl font-bold text-neo-cream">
               Analytics & Statistics
             </CardTitle>
           </CardHeader>
@@ -208,7 +211,7 @@ const Link = () => {
           ) : stats && stats.length > 0 ? (
             <CardContent className="flex flex-col gap-4 pt-4">
               <div className="bg-neo-blue border-3 border-foreground shadow-neo p-4">
-                <p className="text-xs font-bold text-foreground mb-1 uppercase tracking-wide">Total Clicks</p>
+                <p className="text-xl font-bold text-foreground mb-1 uppercase tracking-wide">Total Clicks</p>
                 <p className="text-3xl font-display text-foreground">{stats.length}</p>
               </div>
 
