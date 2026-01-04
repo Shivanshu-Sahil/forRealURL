@@ -30,7 +30,7 @@ const Home = () => {
     {
       icon: BarChart3,
       title: "Advanced Analytics",
-      description: "Track clicks, locations, devices, and referrers in real-time with beautiful dashboards.",
+      description: "Track clicks, locations, devices in real-time with beautiful dashboards.",
       color: "bg-neo-pink",
       size: "md:col-span-2",
     },
@@ -46,13 +46,6 @@ const Home = () => {
       title: "Lightning Fast",
       description: "Sub-millisecond redirects powered by edge computing.",
       color: "bg-neo-yellow",
-      size: "",
-    },
-    {
-      icon: Shield,
-      title: "Enterprise Security",
-      description: "SSL encryption, malware detection, and link expiration controls.",
-      color: "bg-neo-green",
       size: "",
     },
     {
@@ -74,22 +67,14 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section - Yellow Background */}
-      <section className="relative py-16 md:py-24 bg-neo-yellow border-b-3 border-foreground">
+      <section className="relative py-16 md:py-24 bg-neo-white border-b-3 border-foreground">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-card border-3 border-foreground shadow-neo mb-8 animate-bounce-in">
-              <Sparkles className="w-4 h-4 text-foreground" />
-              <span className="text-sm font-bold text-foreground uppercase tracking-wide">
-                Trusted by 100,000+ marketers
-              </span>
-            </div>
-
             {/* Headline */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display mb-6 animate-fade-in-delay-1 -rotate-1">
               <span className="text-foreground">Shorten Your Links,</span>
               <br />
-              <span className="text-foreground bg-neo-pink px-4 inline-block rotate-1 border-3 border-foreground shadow-neo mt-2">
+              <span className="text-foreground bg-neo-green px-4 inline-block rotate-1 border-3 border-foreground shadow-neo mt-2">
                 Expand Your Reach
               </span>
             </h1>
@@ -117,7 +102,7 @@ const Home = () => {
                   <Button
                     type="submit"
                     size="lg"
-                    className="h-14 bg-neo-pink text-foreground border-3 border-foreground shadow-neo hover:shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px]"
+                    className="h-14 bg-neo-blue text-foreground border-3 border-foreground shadow-neo hover:shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px]"
                   >
                     Shorten
                     <ArrowRight className="w-5 h-5" />
@@ -172,10 +157,10 @@ const Home = () => {
       </section>
 
       {/* CTA Section - Coral background */}
-      <section className="py-16 md:py-24 bg-neo-coral border-t-3 border-foreground">
+      <section className="py-16 md:py-24 bg-neo-purple border-t-3 border-foreground">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-card border-3 border-foreground shadow-neo-xl p-8 md:p-16">
+            <div className="bg-card bg-neo-coral border-3 border-foreground shadow-neo-xl p-8 md:p-16">
               <h2 className="text-3xl md:text-5xl font-display mb-6">
                 Ready to transform your{" "}
                 <span className="bg-neo-yellow px-3 border-3 border-foreground inline-block -rotate-1">
@@ -184,7 +169,7 @@ const Home = () => {
                 ?
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8 font-medium">
-                Join thousands of marketers who trust forReal.URL to power their campaigns. Start free, scale as you grow.
+                Use forReal.URL to power your campaigns. Start free, scale as you grow.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link to="/auth">
