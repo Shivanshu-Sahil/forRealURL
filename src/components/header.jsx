@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Link as LinkIcon, Plus, LogOut, Menu, X, Share2 } from 'lucide-react';
+import { Link as LinkIcon, Plus, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UrlState } from '@/context/index';
 import { logout as logoutAPI } from '@/db/apiAuth';
@@ -35,7 +35,6 @@ const Header = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/linktree", label: "Linktree" },
   ];
 
   const isActive = (path) => location.pathname === path;

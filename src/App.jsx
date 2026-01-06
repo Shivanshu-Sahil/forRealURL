@@ -9,29 +9,15 @@ import Redirect from '@/pages/redirect';
 import RequireAuth from '@/components/require-auth';
 import { Toaster } from 'react-hot-toast';
 
-// Linktree pages
-import Linktree from '@/pages/linktree.jsx';
-import LinktreeView from '@/pages/linktree-view.jsx';
-import LinktreeAnalytics from '@/pages/linktree-analytics.jsx';
-
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
-      {/* Routes WITH header/footer */}
-      <Route element={<AppLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
-        <Route path="/link/:id" element={<RequireAuth><Link /></RequireAuth>} />
-        <Route path="/linktree/analytics" element={<RequireAuth><LinktreeAnalytics /></RequireAuth>} />
-        {/* Short URL redirect - must be last in this group */}
-        <Route path=":id" element={<Redirect />} />
-      </Route>
-
-      {/* Routes WITHOUT header/footer (fullscreen) */}
-      <Route path="/linktree" element={<RequireAuth><Linktree /></RequireAuth>} />
-      <Route path="/lt/:id" element={<LinktreeView />} />
-    </>
+    <Route element={<AppLayout />}>
+      <Route path="/" element={<Home />} />
+      <Route path="/auth" element={<Auth />} />
+      <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+      <Route path="/link/:id" element={<RequireAuth><Link /></RequireAuth>} />
+      <Route path=":id" element={<Redirect />} />
+    </Route>
   )
 );
 
