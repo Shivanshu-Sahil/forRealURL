@@ -10,9 +10,9 @@ import RequireAuth from '@/components/require-auth';
 import { Toaster } from 'react-hot-toast';
 
 // Linktree pages
-import Linktree from '@/pages/linktree';
-import LinktreeView from '@/pages/linktree-view';
-import LinktreeAnalytics from '@/pages/linktree-analytics';
+import Linktree from '@/pages/linktree.jsx';
+import LinktreeView from '@/pages/linktree-view.jsx';
+import LinktreeAnalytics from '@/pages/linktree-analytics.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
