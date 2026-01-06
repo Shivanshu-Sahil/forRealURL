@@ -12,11 +12,23 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Features Showcase (Hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-neo-black border-r-3 border-neo-cream">
-        {/* Scattered shapes */}
-        <div className="absolute top-20 right-20 w-24 h-24 bg-neo-yellow border-3 border-neo-cream rotate-12" />
-        <div className="absolute bottom-40 left-20 w-32 h-32 bg-neo-pink border-3 border-neo-cream rounded-full" />
-        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-neo-blue border-3 border-neo-cream -rotate-12" />
+      <div 
+        className="hidden lg:flex lg:w-1/2 relative overflow-hidden border-r-3 border-neo-cream"
+        style={{ backgroundColor: '#0a0a0a' }}
+      >
+        {/* Dotted neobrutalist background */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+
+        {/* Scattered shapes with animations */}
+        <div className="absolute top-20 right-20 w-24 h-24 bg-neo-yellow border-3 border-neo-cream rotate-12 animate-float" />
+        <div className="absolute bottom-40 left-20 w-32 h-32 bg-neo-pink border-3 border-neo-cream rounded-full animate-float-delayed" />
+        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-neo-blue border-3 border-neo-cream -rotate-12 animate-float" />
 
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">
@@ -36,7 +48,7 @@ const Auth = () => {
               Powerful Features
             </h2>
 
-            <div className="bg-neo-yellow border-3 border-neo-cream shadow-neo p-4 -rotate-1">
+            <div className="bg-neo-yellow border-3 border-neo-cream shadow-neo p-4 -rotate-1 hover:shadow-neo-lg hover:-translate-x-1 hover:-translate-y-1 transition-all cursor-default">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-neo-black border-3 border-neo-cream flex items-center justify-center">
                   <Link2 className="w-5 h-5 text-neo-yellow" />
@@ -48,7 +60,7 @@ const Auth = () => {
               </div>
             </div>
 
-            <div className="bg-neo-pink border-3 border-neo-cream shadow-neo p-4 rotate-1">
+            <div className="bg-neo-pink border-3 border-neo-cream shadow-neo p-4 rotate-1 hover:shadow-neo-lg hover:-translate-x-1 hover:-translate-y-1 transition-all cursor-default">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-neo-black border-3 border-neo-cream flex items-center justify-center">
                   <svg className="w-5 h-5 text-neo-pink" viewBox="0 0 24 24" fill="currentColor">
@@ -68,7 +80,7 @@ const Auth = () => {
               </div>
             </div>
 
-            <div className="bg-neo-green border-3 border-neo-cream shadow-neo p-4 -rotate-1">
+            <div className="bg-neo-green border-3 border-neo-cream shadow-neo p-4 -rotate-1 hover:shadow-neo-lg hover:-translate-x-1 hover:-translate-y-1 transition-all cursor-default">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-neo-black border-3 border-neo-cream flex items-center justify-center">
                   <BarChart3 className="w-5 h-5 text-neo-green" />
@@ -83,15 +95,15 @@ const Auth = () => {
 
           {/* Stats */}
           <div className="flex gap-4">
-            <div className="bg-neo-yellow border-3 border-neo-cream shadow-neo p-4">
+            <div className="bg-neo-yellow border-3 border-neo-cream shadow-neo p-4 hover:shadow-neo-lg hover:-translate-x-1 hover:-translate-y-1 transition-all cursor-default">
               <p className="text-2xl font-display text-neo-black">∞</p>
               <p className="text-xs font-bold text-neo-black uppercase">Links</p>
             </div>
-            <div className="bg-neo-blue border-3 border-neo-cream shadow-neo p-4">
+            <div className="bg-neo-blue border-3 border-neo-cream shadow-neo p-4 hover:shadow-neo-lg hover:-translate-x-1 hover:-translate-y-1 transition-all cursor-default">
               <p className="text-2xl font-display text-neo-black">Free</p>
               <p className="text-xs font-bold text-neo-black uppercase">Forever</p>
             </div>
-            <div className="bg-neo-green border-3 border-neo-cream shadow-neo p-4">
+            <div className="bg-neo-green border-3 border-neo-cream shadow-neo p-4 hover:shadow-neo-lg hover:-translate-x-1 hover:-translate-y-1 transition-all cursor-default">
               <p className="text-2xl font-display text-neo-black">1-Click</p>
               <p className="text-xs font-bold text-neo-black uppercase">Actions</p>
             </div>
