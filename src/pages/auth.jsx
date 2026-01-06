@@ -10,7 +10,7 @@ const Auth = () => {
   const [mode, setMode] = useState(initialMode);
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-[calc(100vh-80px)] flex -mb-20">
       {/* Left Side - Features Showcase (Hidden on mobile) */}
       <div 
         className="hidden lg:flex lg:w-1/2 relative overflow-hidden border-r-3 border-neo-cream"
