@@ -35,6 +35,7 @@ const Header = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/dashboard", label: "Dashboard" },
+    { href: "/linktree", label: "Linktree" },
   ];
 
   const isActive = (path) => location.pathname === path;
