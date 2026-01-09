@@ -127,12 +127,15 @@ const URL_PATTERNS = [
     { pattern: /netlify\.app|netlify\.com/i, icon: "netlify" },
     { pattern: /railway\.app/i, icon: "railway" },
     { pattern: /render\.com/i, icon: "render" },
-    // Documents & Resume (Google Drive, etc.)
+    // Documents & Resume (check resume/cv patterns BEFORE general drive patterns)
+    // Priority: Resume links on any platform should show resume icon
+    { pattern: /resume|cv|curriculum[_-]?vitae/i, icon: "resume" },
+    { pattern: /\.pdf(\?|$)/i, icon: "document" },
+    // General drive/docs patterns
     { pattern: /drive\.google\.com/i, icon: "drive" },
     { pattern: /docs\.google\.com/i, icon: "document" },
     { pattern: /notion\.so|notion\.site/i, icon: "notion" },
     { pattern: /dropbox\.com/i, icon: "drive" },
-    { pattern: /resume|cv/i, icon: "resume" },
 ];
 
 // =============================================================================
