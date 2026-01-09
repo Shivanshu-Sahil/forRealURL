@@ -104,8 +104,11 @@ const LivePreview = ({
                                             backdropFilter: theme.styles.backdropFilter,
                                         }}
                                     >
-                                        {/* Show auto-detected icon */}
-                                        {renderIcon(link.icon || detectIconFromUrl(link.url), "w-3 h-3 sm:w-4 sm:h-4")}
+                                        {/* Always re-detect icon from URL if saved icon is default "link" */}
+                                        {renderIcon(
+                                            (link.icon && link.icon !== "link") ? link.icon : detectIconFromUrl(link.url),
+                                            "w-3 h-3 sm:w-4 sm:h-4"
+                                        )}
                                         <span className="font-bold text-xs sm:text-sm">{link.title}</span>
                                     </div>
                                 ))
