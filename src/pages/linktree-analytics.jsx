@@ -189,7 +189,7 @@ const LinktreeAnalytics = () => {
                         </Button>
                         <div>
                             <h1 className="text-4xl sm:text-5xl font-display text-foreground mb-2">
-                                📊 Analytics
+                                Analytics
                             </h1>
                             <p className="text-muted-foreground font-medium">
                                 Linktree views for the last 30 days
