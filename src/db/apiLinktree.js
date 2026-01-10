@@ -18,6 +18,7 @@
 
 import { UAParser } from "ua-parser-js";
 import supabase, { supabaseUrl } from "./supabase";
+import { detectIconFromUrl } from "../lib/iconUtils.jsx";
 
 // =============================================================================
 // LINKTREE MANAGEMENT
@@ -224,7 +225,7 @@ export async function addLinktreeLink(linktree_id, linkData) {
             linktree_id,
             title: linkData.title,
             url: linkData.url,
-            icon: detectSocialIcon(linkData.url), // Auto-detect!
+            icon: detectIconFromUrl(linkData.url), // Auto-detect!
             order_index: nextOrder,
         })
         .select()
@@ -248,7 +249,7 @@ export async function updateLinktreeLink(link_id, updates) {
     // Re-detect icon if URL changed
     const updateData = { ...updates };
     if (updates.url) {
-        updateData.icon = detectSocialIcon(updates.url);
+        updateData.icon = detectIconFromUrl(updates.url);
     }
 
     const { data, error } = await supabase

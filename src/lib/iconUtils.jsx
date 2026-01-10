@@ -32,6 +32,7 @@ import {
     FolderOpen,
     Notebook,
     Cloud,
+    Phone,
 } from "lucide-react";
 
 // =============================================================================
@@ -62,6 +63,10 @@ export const ICON_MAP = {
     store: ShoppingBag,
     gaming: Gamepad2,
     steam: Gamepad2,
+    whatsapp: Phone,
+    pinterest: Camera,
+    snapchat: Camera,
+    reddit: MessageCircle,
     medium: BookOpen,
     blog: BookOpen,
     substack: BookOpen,
@@ -121,6 +126,10 @@ const URL_PATTERNS = [
     // Music & Entertainment
     { pattern: /spotify\.com/i, icon: "spotify" },
     { pattern: /steam(community)?\.com/i, icon: "steam" },
+    { pattern: /whatsapp\.com|wa\.me/i, icon: "whatsapp" },
+    { pattern: /pinterest\.com/i, icon: "pinterest" },
+    { pattern: /snapchat\.com/i, icon: "snapchat" },
+    { pattern: /reddit\.com/i, icon: "reddit" },
     // Developer & Cloud Platforms
     { pattern: /vercel\.app|vercel\.com/i, icon: "vercel" },
     { pattern: /supabase\.co|supabase\.com/i, icon: "supabase" },
@@ -207,6 +216,10 @@ export const getIconInfo = (iconName) => {
         dribbble: "Dribbble",
         spotify: "Spotify",
         steam: "Steam",
+        whatsapp: "WhatsApp",
+        pinterest: "Pinterest",
+        snapchat: "Snapchat",
+        reddit: "Reddit",
         vercel: "Vercel",
         supabase: "Supabase",
         netlify: "Netlify",
