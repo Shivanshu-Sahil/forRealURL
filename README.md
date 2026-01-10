@@ -4,7 +4,7 @@
 
 ### Transform Long URLs into Short, Trackable Links & Create Your Personal Link Hub
 
-![URL Shortener Demo](https://i.postimg.cc/ZYD16RZy/URL-Shortener-Fast-Secure-Link-Management-Google-Chrome-22-10-2025-2-10-35-pm.png)
+![URL Shortener Demo](https://i.postimg.cc/pXg27wxH/for-Real-URL.png)
 
 <img alt="React" src="https://img.shields.io/badge/React-19.1.1-61DAFB?style=for-the-badge&logo=react">
 <img alt="Vite" src="https://img.shields.io/badge/Vite-7.1.7-646CFF?style=for-the-badge&logo=vite">
@@ -27,18 +27,15 @@
 - **Link Management**: Centralized dashboard with search, filter, and bulk operations
 
 ### 🌳 Linktree Platform
-- **Personal Profile Pages**: Create your own `realurl.vercel.app/username` link hub
-- **Drag-and-Drop Reordering**: Organize links with intuitive drag-and-drop interface
+- **Personal Profile Pages**: Create your own `realurl.vercel.app/username` link hub with Avatar
 - **Auto-Icon Detection**: Smart detection for 20+ platforms (GitHub, LinkedIn, Twitter, Instagram, YouTube, etc.)
 - **Theme Customization**: Custom colors for links and background with live preview
-- **Avatar Upload**: Personalized profile with image upload to Supabase storage
 - **Public Sharing**: Shareable profile URL for bio links
 
 ### 📊 Dual Analytics Dashboards
 - **URL Analytics**: Track clicks, devices, locations, and browsers per shortened link
 - **Linktree Analytics**: Monitor profile views with 30-day trends and visitor insights
 - **Recharts Visualizations**: Interactive line charts, pie charts, and progress bars
-- **Geographic Insights**: Top countries and cities breakdown
 - **Device Statistics**: Desktop, mobile, and tablet distribution
 
 ### 🔐 Security & Authentication
@@ -46,13 +43,6 @@
 - **Row-Level Security**: Complete user data isolation with PostgreSQL RLS policies
 - **Protected Routes**: Auth guards for private dashboards
 - **Session Management**: Secure token-based sessions
-
-### 🎨 UI/UX
-- **Neobrutalism Design**: Bold borders, vibrant colors, and offset shadows
-- **Responsive Layout**: Flawless experience across all devices
-- **Toast Notifications**: Real-time feedback for all actions
-- **Loading States**: Skeleton loaders and spinners
-- **Clipboard Integration**: One-click copy with visual confirmation
 
 ---
 
@@ -74,11 +64,6 @@
 ---
 
 ## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js** v20+ – [Download](https://nodejs.org/)
-- **Supabase account** – [Sign up free](https://supabase.com/)
 
 ### Installation
 
@@ -139,12 +124,12 @@ npm run preview
 ## 🙌 Contributing
 
 Contributions are **greatly appreciated**! Feel free to open issues or submit PRs.
+- **Issues**: [Bug Reports & Feature Requests](https://github.com/Shivanshu-Sahil/forRealURL/issues)
 
 ## 📬 Contact
 
 - **GitHub**: [@Shivanshu-Sahil](https://github.com/Shivanshu-Sahil)
-- **Project**: [forRealURL Repository](https://github.com/Shivanshu-Sahil/forRealURL)
-- **Issues**: [Bug Reports & Feature Requests](https://github.com/Shivanshu-Sahil/forRealURL/issues)
+- **Linkedin**: [Shivanshu Sahil](www.linkedin.com/in/shivanshu-sahil)
 
 ## 📝 License
 
