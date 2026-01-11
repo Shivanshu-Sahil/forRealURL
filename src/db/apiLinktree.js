@@ -412,51 +412,6 @@ export async function getLinktreeAnalytics(linktree_id, days = 30) {
     };
 }
 
-// =============================================================================
-// HELPER FUNCTIONS
-// =============================================================================
-
-/**
- * Auto-detect social media icon from URL
- * This makes the links look nicer with appropriate icons!
- * 
- * @param {string} url - The link URL
- * @returns {string} - Icon identifier
- */
-function detectSocialIcon(url) {
-    if (!url) return "link";
-
-    const patterns = {
-        twitter: /twitter\.com|x\.com/i,
-        github: /github\.com/i,
-        linkedin: /linkedin\.com/i,
-        instagram: /instagram\.com/i,
-        youtube: /youtube\.com|youtu\.be/i,
-        tiktok: /tiktok\.com/i,
-        facebook: /facebook\.com|fb\.com/i,
-        discord: /discord\.gg|discord\.com/i,
-        twitch: /twitch\.tv/i,
-        spotify: /spotify\.com/i,
-        medium: /medium\.com/i,
-        dribbble: /dribbble\.com/i,
-        behance: /behance\.net/i,
-        figma: /figma\.com/i,
-        notion: /notion\.so/i,
-        mail: /^mailto:/i,
-        whatsapp: /whatsapp\.com|wa\.me/i,
-        telegram: /t\.me|telegram/i,
-        pinterest: /pinterest\.com/i,
-        snapchat: /snapchat\.com/i,
-        reddit: /reddit\.com/i,
-    };
-
-    for (const [icon, pattern] of Object.entries(patterns)) {
-        if (pattern.test(url)) return icon;
-    }
-
-    return "link"; // Default icon
-}
-
 /**
  * Check if a short URL is available
  * Used to validate before creating linktree
