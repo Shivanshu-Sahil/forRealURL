@@ -1,11 +1,3 @@
-/**
- * =============================================================================
- * LIVE PREVIEW COMPONENT
- * =============================================================================
- * Real-time preview of the linktree with selected theme applied.
- * Shows how the linktree will look to visitors.
- */
-
 import React from 'react';
 import { Eye, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -49,7 +41,6 @@ const LivePreview = ({
                     }}
                 >
                     <div className="p-3 sm:p-4">
-                        {/* Preview Profile */}
                         <div className="text-center mb-4 sm:mb-6">
                             {avatarUrl ? (
                                 <div
@@ -89,7 +80,6 @@ const LivePreview = ({
                             )}
                         </div>
 
-                        {/* Preview Links - Now with Icons! */}
                         <div className="space-y-2 sm:space-y-3">
                             {links.length > 0 ? (
                                 links.slice(0, 4).map((link) => (
@@ -104,7 +94,6 @@ const LivePreview = ({
                                             backdropFilter: theme.styles.backdropFilter,
                                         }}
                                     >
-                                        {/* Always re-detect icon from URL if saved icon is default "link" */}
                                         {renderIcon(
                                             (link.icon && link.icon !== "link") ? link.icon : detectIconFromUrl(link.url),
                                             "w-3 h-3 sm:w-4 sm:h-4"
@@ -114,7 +103,6 @@ const LivePreview = ({
                                 ))
                             ) : (
                                 <>
-                                    {/* Sample links for preview */}
                                     {[
                                         { name: 'Portfolio', icon: 'website' },
                                         { name: 'Twitter', icon: 'twitter' },
@@ -150,7 +138,6 @@ const LivePreview = ({
                 </div>
             </div>
 
-            {/* Save Theme Button */}
             <div className="mt-4 sm:mt-6 flex justify-center">
                 <Button
                     onClick={handleSave}
