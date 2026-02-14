@@ -48,6 +48,7 @@ import {
     addLinktreeLink,
     updateLinktreeLink,
     deleteLinktreeLink,
+    reorderLinktreeLinks,
     isShortUrlAvailable,
 } from "@/db/apiLinktree";
 
@@ -259,6 +260,21 @@ const Linktree = () => {
         }
     };
 
+    // Reorder links after drag-and-drop
+    // Optimistically updates state (triggers instant re-render of LinksManager + LivePreview)
+    // Then persists new order to database
+    const handleReorder = async (reorderedLinks) => {
+        const previousLinks = [...links];
+        setLinks(reorderedLinks); // Instant UI update
+
+        try {
+            await reorderLinktreeLinks(reorderedLinks.map((l) => l.id));
+        } catch (error) {
+            setLinks(previousLinks); // Revert on failure
+            toast.error("Failed to reorder links");
+        }
+    };
+
     const handleCopy = () => {
         const baseUrl = import.meta.env.VITE_CUSTOM_URL || window.location.origin;
         const fullUrl = `${baseUrl}/${shortUrl}`;
@@ -382,6 +398,7 @@ const Linktree = () => {
                         openEditDialog={openEditDialog}
                         handleDeleteLink={handleDeleteLink}
                         deletingLink={deletingLink}
+                        onReorder={handleReorder}
                     />
 
                     {/* Column 3 - Live Preview */}
