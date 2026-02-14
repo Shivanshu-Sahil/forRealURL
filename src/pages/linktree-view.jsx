@@ -1,19 +1,3 @@
-/**
- * =============================================================================
- * PUBLIC LINKTREE VIEW PAGE
- * =============================================================================
- * This is what visitors see when they open a shared linktree URL.
- * 
- * FEATURES:
- *   - Mobile-first responsive design
- *   - Applies user's selected THEME PRESET
- *   - Shows all active links with auto-detected icons
- *   - Records page view for analytics
- * 
- * NO LOGIN REQUIRED - This is a public page!
- * =============================================================================
- */
-
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -39,7 +23,6 @@ import {
 import { getTheme } from "@/lib/themes";
 import supabase from "@/db/supabase";
 
-// Icon mapping
 const ICON_MAP = {
     twitter: Twitter,
     github: Github,
@@ -66,16 +49,12 @@ const ICON_MAP = {
 };
 
 const LinktreeView = () => {
-    const { id } = useParams(); // This is the linktree UUID
+    const { id } = useParams();
 
     const [linktree, setLinktree] = useState(null);
     const [links, setLinks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    // ==========================================================================
-    // LOAD DATA ON MOUNT
-    // ==========================================================================
 
     useEffect(() => {
         loadLinktree();
@@ -85,7 +64,6 @@ const LinktreeView = () => {
         try {
             setLoading(true);
 
-            // Fetch linktree by ID
             const { data: ltData, error: ltError } = await supabase
                 .from("linktrees")
                 .select("*")
@@ -100,11 +78,10 @@ const LinktreeView = () => {
 
             setLinktree(ltData);
 
-            // Fetch links
             const linksData = await getPublicLinktreeLinks(ltData.id);
             setLinks(linksData || []);
 
-            // Record page view (async, don't wait)
+            // Record view async, don't block render
             recordLinktreeView(ltData.id);
 
         } catch (err) {
@@ -115,15 +92,10 @@ const LinktreeView = () => {
         }
     };
 
-    // Get icon component
     const getIcon = (iconName) => {
         const Icon = ICON_MAP[iconName] || ICON_MAP.link;
         return <Icon className="w-5 h-5" />;
     };
-
-    // ==========================================================================
-    // LOADING STATE
-    // ==========================================================================
 
     if (loading) {
         return (
@@ -135,10 +107,6 @@ const LinktreeView = () => {
             </div>
         );
     }
-
-    // ==========================================================================
-    // ERROR STATE
-    // ==========================================================================
 
     if (error || !linktree) {
         return (
@@ -164,11 +132,6 @@ const LinktreeView = () => {
         );
     }
 
-    // ==========================================================================
-    // APPLY THEME
-    // ==========================================================================
-
-    // Get the theme preset (default to neobrutalist)
     const theme = getTheme(linktree.theme_preset || "neobrutalist");
     const styles = theme.styles;
 
@@ -181,9 +144,8 @@ const LinktreeView = () => {
             }}
         >
             <div className="max-w-md mx-auto">
-                {/* Profile Section */}
+                {/* Profile */}
                 <div className="text-center mb-8">
-                    {/* Avatar */}
                     {linktree.avatar_url ? (
                         <div
                             className="w-24 h-24 mx-auto mb-4 overflow-hidden"
@@ -212,7 +174,6 @@ const LinktreeView = () => {
                         </div>
                     )}
 
-                    {/* Title */}
                     <h1
                         className="text-2xl mb-2"
                         style={{
@@ -223,7 +184,6 @@ const LinktreeView = () => {
                         {linktree.title || "My Links"}
                     </h1>
 
-                    {/* Bio */}
                     {linktree.bio && (
                         <p
                             className="text-sm opacity-80"
@@ -268,7 +228,6 @@ const LinktreeView = () => {
                     ))}
                 </div>
 
-                {/* Empty state */}
                 {links.length === 0 && (
                     <div
                         className="text-center py-8 opacity-60"
