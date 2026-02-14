@@ -1,20 +1,3 @@
-/**
- * =============================================================================
- * LINKTREE ANALYTICS PAGE
- * =============================================================================
- * Shows analytics for the user's linktree page views.
- * 
- * FEATURES:
- *   - Total views count
- *   - Views over time chart (using Recharts)
- *   - Device breakdown (desktop/mobile/tablet)
- *   - Location breakdown (countries)
- *   - Browser breakdown
- * 
- * This reuses the same chart patterns from your existing link analytics page.
- * =============================================================================
- */
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -37,7 +20,6 @@ import {
     getLinktreeAnalytics,
 } from "@/db/apiLinktree";
 
-// Recharts components (already in your project)
 import {
     LineChart,
     Line,
@@ -51,7 +33,6 @@ import {
     Cell,
 } from "recharts";
 
-// Chart colors
 const COLORS = ["#FFE500", "#FF6B9D", "#00D4AA", "#00A6FF", "#A855F7", "#FF7F50"];
 
 const LinktreeAnalytics = () => {
@@ -63,10 +44,6 @@ const LinktreeAnalytics = () => {
 
     const { loading: loadingLinktree, fn: fnGetLinktree } = useFetch(getLinktree);
     const { loading: loadingAnalytics, fn: fnGetAnalytics } = useFetch(getLinktreeAnalytics);
-
-    // ==========================================================================
-    // LOAD DATA
-    // ==========================================================================
 
     useEffect(() => {
         if (user?.id) {
@@ -87,10 +64,6 @@ const LinktreeAnalytics = () => {
         }
     };
 
-    // ==========================================================================
-    // LOADING STATE
-    // ==========================================================================
-
     if (userLoading || loadingLinktree || loadingAnalytics) {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center">
@@ -99,7 +72,6 @@ const LinktreeAnalytics = () => {
         );
     }
 
-    // No linktree yet
     if (!linktree) {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -124,11 +96,6 @@ const LinktreeAnalytics = () => {
         );
     }
 
-    // ==========================================================================
-    // PROCESS DATA FOR CHARTS
-    // ==========================================================================
-
-    // Views by date for line chart
     const viewsChartData = analytics?.viewsByDate
         ? Object.entries(analytics.viewsByDate).map(([date, count]) => ({
             date: new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
@@ -136,7 +103,6 @@ const LinktreeAnalytics = () => {
         }))
         : [];
 
-    // Device data for pie chart
     const deviceData = analytics?.viewsByDevice
         ? Object.entries(analytics.viewsByDevice).map(([device, count]) => ({
             name: device.charAt(0).toUpperCase() + device.slice(1),
@@ -144,21 +110,18 @@ const LinktreeAnalytics = () => {
         }))
         : [];
 
-    // Country data
     const countryData = analytics?.viewsByCountry
         ? Object.entries(analytics.viewsByCountry)
             .sort((a, b) => b[1] - a[1])
             .slice(0, 5)
         : [];
 
-    // Browser data
     const browserData = analytics?.viewsByBrowser
         ? Object.entries(analytics.viewsByBrowser)
             .sort((a, b) => b[1] - a[1])
             .slice(0, 5)
         : [];
 
-    // Get device icon
     const getDeviceIcon = (device) => {
         switch (device.toLowerCase()) {
             case "mobile":
@@ -169,10 +132,6 @@ const LinktreeAnalytics = () => {
                 return <Monitor className="w-5 h-5" />;
         }
     };
-
-    // ==========================================================================
-    // RENDER
-    // ==========================================================================
 
     return (
         <div className="min-h-screen bg-background">
