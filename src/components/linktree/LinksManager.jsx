@@ -1,18 +1,8 @@
-/**
- * =============================================================================
- * LINKS MANAGER COMPONENT
- * =============================================================================
- * Manages the list of links in the linktree editor.
- * Displays links with auto-detected icons and provides edit/delete actions.
- * Supports drag-and-drop reordering via @dnd-kit.
- */
-
 import React from 'react';
 import { Link as LinkIcon, Plus, Edit2, Trash2, GripVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { renderIcon, detectIconFromUrl } from '@/lib/iconUtils.jsx';
 
-// Drag-and-drop imports
 import {
     DndContext,
     closestCenter,
@@ -29,10 +19,6 @@ import {
     useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-
-// =============================================================================
-// SORTABLE LINK ITEM
-// =============================================================================
 
 const SortableLink = ({ link, index, openEditDialog, handleDeleteLink, deletingLink }) => {
     const {
@@ -59,7 +45,6 @@ const SortableLink = ({ link, index, openEditDialog, handleDeleteLink, deletingL
                 } border-3 border-white p-4 flex items-center gap-3 hover:shadow-[4px_4px_0px_#ffe500] transition-all ${isDragging ? 'shadow-[6px_6px_0px_#00d4aa]' : ''
                 }`}
         >
-            {/* Drag handle — only this element is draggable */}
             <div
                 className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-white transition-colors touch-none"
                 {...attributes}
@@ -68,7 +53,6 @@ const SortableLink = ({ link, index, openEditDialog, handleDeleteLink, deletingL
                 <GripVertical className="w-5 h-5" />
             </div>
 
-            {/* Auto-detected icon - re-detect from URL if saved icon is default "link" */}
             <div
                 className="w-10 h-10 border-2 border-white flex items-center justify-center"
                 style={{ backgroundColor: "#ffe500" }}
@@ -107,10 +91,6 @@ const SortableLink = ({ link, index, openEditDialog, handleDeleteLink, deletingL
     );
 };
 
-// =============================================================================
-// LINKS MANAGER
-// =============================================================================
-
 const LinksManager = ({
     linktree,
     links,
@@ -120,12 +100,9 @@ const LinksManager = ({
     deletingLink,
     onReorder,
 }) => {
-    // Sensors with activation constraint to distinguish click from drag
     const sensors = useSensors(
         useSensor(PointerSensor, {
-            activationConstraint: {
-                distance: 8, // 8px movement before drag starts
-            },
+            activationConstraint: { distance: 8 },
         }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
@@ -180,7 +157,6 @@ const LinksManager = ({
                 </div>
             )}
 
-            {/* Links List — Sortable via drag-and-drop */}
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
