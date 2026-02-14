@@ -1,17 +1,3 @@
-/**
- * =============================================================================
- * LINKTREE EDITOR PAGE
- * =============================================================================
- * This is where users create and manage their linktree.
- * 
- * Components:
- *   - SidebarProfile: Avatar, title, bio
- *   - ThemeSelector: Theme preset selection
- *   - ShareLink: URL customization and copy
- *   - LinksManager: Link list with CRUD operations
- *   - LivePreview: Real-time preview with theme
- */
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BarChart3 } from "lucide-react";
@@ -31,14 +17,12 @@ import { getAllThemes } from "@/lib/themes";
 import { detectIconFromUrl } from "@/lib/iconUtils.jsx";
 import toast from "react-hot-toast";
 
-// Sub-components
 import SidebarProfile from "@/components/linktree/SidebarProfile";
 import ThemeSelector from "@/components/linktree/ThemeSelector";
 import ShareLink from "@/components/linktree/ShareLink";
 import LinksManager from "@/components/linktree/LinksManager";
 import LivePreview from "@/components/linktree/LivePreview";
 
-// API functions
 import {
     getLinktree,
     createLinktree,
@@ -56,15 +40,9 @@ const Linktree = () => {
     const navigate = useNavigate();
     const { user, loading: userLoading } = UrlState();
 
-    // ==========================================================================
-    // STATE
-    // ==========================================================================
-
-    // Linktree data
     const [linktree, setLinktree] = useState(null);
     const [links, setLinks] = useState([]);
 
-    // Form state
     const [title, setTitle] = useState("My Links");
     const [bio, setBio] = useState("");
     const [avatarUrl, setAvatarUrl] = useState("");
@@ -72,7 +50,6 @@ const Linktree = () => {
     const [bgColor, setBgColor] = useState("#0f172a");
     const [shortUrl, setShortUrl] = useState("");
 
-    // UI state
     const [copied, setCopied] = useState(false);
     const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
     const [editingLink, setEditingLink] = useState(null);
@@ -82,12 +59,7 @@ const Linktree = () => {
     const [selectedTheme, setSelectedTheme] = useState("neobrutalist");
     const [currentTheme, setCurrentTheme] = useState("neobrutalist");
 
-    // All available themes
     const allThemes = getAllThemes();
-
-    // ==========================================================================
-    // API CALLS
-    // ==========================================================================
 
     const { loading: loadingLinktree, fn: fnGetLinktree } = useFetch(getLinktree);
     const { loading: loadingLinks, fn: fnGetLinks } = useFetch(getLinktreeLinks);
@@ -97,10 +69,6 @@ const Linktree = () => {
     const { loading: addingLink, fn: fnAddLink } = useFetch(addLinktreeLink);
     const { loading: updatingLink, fn: fnUpdateLink } = useFetch(updateLinktreeLink);
     const { loading: deletingLink, fn: fnDeleteLink } = useFetch(deleteLinktreeLink);
-
-    // ==========================================================================
-    // LOAD DATA ON MOUNT
-    // ==========================================================================
 
     useEffect(() => {
         if (user?.id) {
@@ -131,10 +99,6 @@ const Linktree = () => {
             console.error("Error loading linktree:", error);
         }
     };
-
-    // ==========================================================================
-    // HANDLERS
-    // ==========================================================================
 
     const generateShortUrl = () => {
         return Math.random().toString(36).substring(2, 8);
@@ -202,20 +166,17 @@ const Linktree = () => {
         }
     };
 
-    // Save link with auto-detected icon
     const handleSaveLink = async () => {
         if (!newLinkTitle.trim() || !newLinkUrl.trim()) {
             toast.error("Please enter title and URL");
             return;
         }
 
-        // Ensure URL has protocol
         let url = newLinkUrl.trim();
         if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("mailto:")) {
             url = "https://" + url;
         }
 
-        // Auto-detect icon from URL
         const detectedIcon = detectIconFromUrl(url);
 
         try {
@@ -223,7 +184,7 @@ const Linktree = () => {
                 const updated = await fnUpdateLink(editingLink.id, {
                     title: newLinkTitle,
                     url: url,
-                    icon: detectedIcon, // Save detected icon
+                    icon: detectedIcon,
                 });
                 setLinks(links.map((l) => (l.id === editingLink.id ? updated : l)));
                 toast.success("Link updated!");
@@ -235,7 +196,7 @@ const Linktree = () => {
                 const added = await fnAddLink(linktree.id, {
                     title: newLinkTitle,
                     url: url,
-                    icon: detectedIcon, // Save detected icon
+                    icon: detectedIcon,
                 });
                 setLinks([...links, added]);
                 toast.success("Link added!");
@@ -260,17 +221,15 @@ const Linktree = () => {
         }
     };
 
-    // Reorder links after drag-and-drop
-    // Optimistically updates state (triggers instant re-render of LinksManager + LivePreview)
-    // Then persists new order to database
+    // Optimistic update: instantly re-renders LinksManager + LivePreview, then persists
     const handleReorder = async (reorderedLinks) => {
         const previousLinks = [...links];
-        setLinks(reorderedLinks); // Instant UI update
+        setLinks(reorderedLinks);
 
         try {
             await reorderLinktreeLinks(reorderedLinks.map((l) => l.id));
         } catch (error) {
-            setLinks(previousLinks); // Revert on failure
+            setLinks(previousLinks);
             toast.error("Failed to reorder links");
         }
     };
@@ -297,10 +256,6 @@ const Linktree = () => {
         setIsLinkDialogOpen(true);
     };
 
-    // ==========================================================================
-    // LOADING STATE
-    // ==========================================================================
-
     if (userLoading || loadingLinktree) {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center">
@@ -309,15 +264,10 @@ const Linktree = () => {
         );
     }
 
-    // ==========================================================================
-    // RENDER
-    // ==========================================================================
-
     const baseUrl = import.meta.env.VITE_CUSTOM_URL || window.location.origin;
 
     return (
         <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
-            {/* Dotted neobrutalist background */}
             <div
                 className="fixed inset-0 pointer-events-none opacity-20"
                 style={{
@@ -326,7 +276,7 @@ const Linktree = () => {
                 }}
             />
 
-            {/* Top Navigation Bar */}
+            {/* Top Navigation */}
             <div className="fixed top-0 left-0 right-0 z-50 px-4 py-4">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     <Button
@@ -355,7 +305,6 @@ const Linktree = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 pt-20 pb-8 min-h-screen">
-                {/* 3-Column Grid Layout */}
                 <div className="grid lg:grid-cols-3 gap-4 h-[calc(100vh-120px)]">
                     {/* Column 1 - Profile & Theme */}
                     <div className="space-y-4 overflow-y-auto">
