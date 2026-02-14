@@ -1,52 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import {
-    Twitter,
-    Github,
-    Linkedin,
-    Instagram,
-    Youtube,
-    Facebook,
-    Music2,
-    MessageCircle,
-    Twitch,
-    ExternalLink,
-    Mail,
-    Send,
-    Link as LinkIcon,
-} from "lucide-react";
+import { Link as LinkIcon } from "lucide-react";
 
 import {
     getPublicLinktreeLinks,
     recordLinktreeView,
 } from "@/db/apiLinktree";
 import { getTheme } from "@/lib/themes";
+import { getIconComponent } from "@/lib/iconUtils.jsx";
 import supabase from "@/db/supabase";
-
-const ICON_MAP = {
-    twitter: Twitter,
-    github: Github,
-    linkedin: Linkedin,
-    instagram: Instagram,
-    youtube: Youtube,
-    facebook: Facebook,
-    tiktok: Music2,
-    discord: MessageCircle,
-    twitch: Twitch,
-    mail: Mail,
-    telegram: Send,
-    whatsapp: MessageCircle,
-    spotify: Music2,
-    medium: ExternalLink,
-    dribbble: ExternalLink,
-    behance: ExternalLink,
-    figma: ExternalLink,
-    notion: ExternalLink,
-    reddit: MessageCircle,
-    pinterest: ExternalLink,
-    snapchat: ExternalLink,
-    link: ExternalLink,
-};
 
 const LinktreeView = () => {
     const { id } = useParams();
@@ -93,7 +55,7 @@ const LinktreeView = () => {
     };
 
     const getIcon = (iconName) => {
-        const Icon = ICON_MAP[iconName] || ICON_MAP.link;
+        const Icon = getIconComponent(iconName);
         return <Icon className="w-5 h-5" />;
     };
 
